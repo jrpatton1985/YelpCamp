@@ -20,7 +20,7 @@ var commentRoutes    = require("./routes/comments"),
 
 // ============== Configuration ===============
 // favicon
-//app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
+app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 // database
 //seedDB();   // seed the database
 // mongoose.connect("mongodb://localhost/yelp_camp");
