@@ -23,8 +23,9 @@ var commentRoutes    = require("./routes/comments"),
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 // database
 //seedDB();   // seed the database
-mongoose.connect("mongodb://localhost/yelp_camp");
-
+// mongoose.connect("mongodb://localhost/yelp_camp");
+mongoose.connect("mongodb://pattonjim:ppbq635H@ds153710.mlab.com:53710/yelp_camp")
+// mongodb://pattonjim:ppbq635H@ds153710.mlab.com:53710/yelp_camp
 // view engine setup
 app.set("view engine", "ejs");
 
@@ -64,6 +65,6 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 var ip = process.env.IP || "192.168.1.130";
 var port = process.env.IP || 1337;
 app.listen(port, function() {
-    //console.log("YelpCamp server has started at: " + ip + ":" + port);
+    console.log("YelpCamp server has started");
 });
 // ============================================
