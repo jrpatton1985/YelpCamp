@@ -1,0 +1,19 @@
+body {
+  font-family: "Lato", sans-serif;
+  margin-bottom: 60px;
+}
+h1 {
+  text-align: center;
+}
+textarea.form-control {
+  height: 150px;
+  resize: vertical;
+}
+.flex {
+   display: flex;
+   flex-wrap: wrap;
+}
+.form-center {
+  width: 40%;
+  margin: 30px auto;
+}
