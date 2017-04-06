@@ -61,9 +61,9 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 // ============================================
 
 // ================= Listener =================
-var ip = "192.168.1.130";
-var port = 1337;
-app.listen(process.env.PORT, process.env.IP, function() {
+var ip = process.env.IP || "192.168.1.130";
+var port = process.env.IP || 1337;
+app.listen(port, function() {
     //console.log("YelpCamp server has started at: " + ip + ":" + port);
 });
 // ============================================
