@@ -24,7 +24,7 @@ app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 // database
 //seedDB();   // seed the database
 // mongoose.connect("mongodb://localhost/yelp_camp");
-mongoose.connect("mongodb://pattonjim:ppbq635H@ds153710.mlab.com:53710/yelp_camp")
+mongoose.connect("mongodb://pattonjim:ppbq635H@ds153710.mlab.com:53710/yelp_camp");
 // mongodb://pattonjim:ppbq635H@ds153710.mlab.com:53710/yelp_camp
 // view engine setup
 app.set("view engine", "ejs");
