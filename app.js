@@ -23,9 +23,13 @@ var commentRoutes    = require("./routes/comments"),
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 // database
 //seedDB();   // seed the database
+
+// connect to database either locally (mongodb://localhost/yelp_camp)
+// or through Mongo Lab online (mongodb://pattonjim:ppbq635H@ds153710.mlab.com:53710/yelp_camp)
+mongoose.connect(process.env.DATABASEURL);
 // mongoose.connect("mongodb://localhost/yelp_camp");
-mongoose.connect("mongodb://pattonjim:ppbq635H@ds153710.mlab.com:53710/yelp_camp");
-// mongodb://pattonjim:ppbq635H@ds153710.mlab.com:53710/yelp_camp
+// mongoose.connect("mongodb://pattonjim:ppbq635H@ds153710.mlab.com:53710/yelp_camp");
+
 // view engine setup
 app.set("view engine", "ejs");
 
