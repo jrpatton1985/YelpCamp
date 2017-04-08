@@ -4,10 +4,14 @@
     <header class="jumbotron">
       <div class="container">
         <h1><span class="glyphicon glyphicon-tent"></span>Welcome to YelpCamp</h1>
-        <p>View our campgrounds.</p>
-        <p>
-          <a class="btn btn-primary btn-large" href="/campgrounds/new">New Campground</a>
-        </p>
+        <p>Discover amazing campgrounds</p>
+
+        <% if(currentUser) { %>
+          <p>
+            <a id="newCamp" class="btn btn-primary btn-large" href="/campgrounds/new">New Campground</a>
+          </p>
+        <% } %>
+
       </div>
     </header>
 
@@ -15,17 +19,63 @@
       <% campgrounds.forEach(function(campground) { %>
         <div class="col-md-3 col-sm-6">
           <div class="thumbnail">
-              <img src="<%=campground.image %>" alt="<%=campground.name %>">
+              <img class="img-responsive" src="<%=campground.image %>" alt="<%=campground.name %>">
               <div class="caption">
                 <h4><%=campground.name %></h4>
               </div>
               <p>
-                <a href="/campgrounds/<%=campground._id %>" class="btn btn-primary">More Info</a>
+                <a href="/campgrounds/<%=campground._id %>" class="btn btn-primary"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;&nbsp;More Info</a>
               </p>
           </div>
         </div>
       <% }); %>
     </div>
+
+    <!-- Pagination -->
+    <!-- Provided by Roman Tuomisto -->
+    <!-- https://www.udemy.com/the-web-developer-bootcamp/learn/v4/questions/1646592 -->
+    <div class="row">
+      <nav>
+        <div class="col-md-offset-5">
+          <ul class="pagination pagination-lg">
+
+            <% if (output.pages.current > 1 && output.pages.hasPrev === true) { %>
+              <li>
+                <a href="/campgrounds/page/<%=output.pages.prev %>" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+            <% } else { %>
+              <li>
+                <a class="btn btn-xs disabled" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+            <% } %>
+
+            <% for (var i = 1; i < output.pages.total + 1; i++) { %>
+              <li><a href="/campgrounds/page/<%=i %>"><%=i %></a></li>
+            <% } %>
+
+            <% if (output.pages.current < output.pages.total && output.pages.hasNext === true) { %>
+              <li>
+                <a href="/campgrounds/page/<%=output.pages.next %>" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            <% } else { %>
+              <li>
+                <a class="btn btn-xs disabled" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            <% } %>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <!-- End Pagination -->
+
   </div>
 
 <% include ../partials/footer %>

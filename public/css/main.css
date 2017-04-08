@@ -17,6 +17,25 @@ html {
 }
 /* ---- End   Footer  ---- */
 
+header.jumbotron {
+  background: url('../../imgs/1132895352.png');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  overflow-x: hidden;
+  transform: translateZ(-1px);
+  z-index: -1;
+
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+  text-transform: uppercase;
+}
+
+#newCamp {
+  text-transform: none;
+}
+
 .thumbnail img {
   width: 100%;
 }
@@ -26,6 +45,10 @@ html {
 
 .thumbnail .caption-full {
   padding: 9px;
+}
+
+.pagination li {
+  margin: 0 auto;
 }
 
 #delete-form {

@@ -4,8 +4,63 @@ var geocoder = require("geocoder");
 var Campground = require("../models/campground");
 var middleware = require("../middleware");
 
-// =========== Campground Routes ==============
-// -- Index Route
+
+/*
+  Pagination provided by: Roman Tuomisto
+  URL: https://www.udemy.com/the-web-developer-bootcamp/learn/v4/questions/1646592
+ */
+// =============== Pagination =================
+function paginate(req, res, next) {
+    var perPage = 8;
+    var page = req.params.page || 1;
+    var output = {
+        data: null,
+        pages: {
+            current: page,
+            prev: 0,
+            hasPrev: false,
+            next: 0,
+            hasNext: false,
+            total: 0
+        },
+        items: {
+            begin: ((page * perPage) - perPage) + 1,
+            end: page * perPage,
+            total: 0
+        }
+    };
+    Campground.find({})
+              .skip((page - 1) * perPage)
+              .limit(perPage)
+              .exec(function(err, allCampgrounds) {
+                  if (err) return next(err.message);
+
+                  Campground.count().exec(function (err, count) {
+                      if (err) return next(err.message);
+
+                      output.items.total = count;
+                      output.data = allCampgrounds;
+                      output.pages.total = Math.ceil(output.items.total / perPage);
+                      if (output.pages.current < output.pages.total) {
+                          output.pages.next = Number(output.pages.current) + 1;
+                      } else {
+                          output.pages.next = 0;
+                      }
+                      output.pages.hasNext = (output.pages.next !== 0);
+                      output.pages.prev = output.pages.current - 1;
+                      output.pages.hasPrev = (output.pages.prev !== 0);
+                      if (output.items.end > output.items.total) {
+                        output.items.end = output.items.total;
+                      }
+                      res.render("campgrounds/index", {
+                          campgrounds: allCampgrounds,
+                          output: output
+                  });
+              });
+    });
+}
+
+/* -- Index Route
 router.get("/", function(req, res) {
     // get all campgrounds from db
     Campground.find({}, function(err, allCampgrounds) {
@@ -16,6 +71,17 @@ router.get("/", function(req, res) {
         }
     });
 });
+*/
+// -- Index Pagination Route
+router.get("/", function(req, res, next) {
+    paginate(req, res, next);
+});
+// -- Get Pagination Route (next page)
+router.get("/page/:page", function(req, res, next) {
+    paginate(req, res, next);
+});
+
+// =========== Campground Routes ==============
 // -- New Route
 router.get("/new", middleware.isLoggedIn, function(req, res) {
     res.render("campgrounds/new");
