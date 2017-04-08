@@ -6,6 +6,7 @@ footer {
   z-index: 1;
   position: relative;
   padding-top: 40vh;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 
 #landing-header {
@@ -13,10 +14,12 @@ footer {
   position: relative;
   text-align: center;
   padding-top: 40vh;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
 }
 
-#landing-header h1 {
-  color: #fff;
+#landing-header p {
+  font-size: 1.5em;
 }
 
 .slideshow {

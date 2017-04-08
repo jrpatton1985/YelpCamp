@@ -54,7 +54,8 @@ function paginate(req, res, next) {
                       }
                       res.render("campgrounds/index", {
                           campgrounds: allCampgrounds,
-                          output: output
+                          output: output,
+                          pageSelect: 'campgrounds'
                   });
               });
     });

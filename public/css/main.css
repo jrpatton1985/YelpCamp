@@ -30,6 +30,10 @@ header.jumbotron {
   color: white;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
   text-transform: uppercase;
+
+  -webkit-box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.6);
+  -moz-box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.6);
+  box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.6);
 }
 
 #newCamp {
@@ -45,6 +49,19 @@ header.jumbotron {
 
 .thumbnail .caption-full {
   padding: 9px;
+}
+
+.rounded {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px; /* future proofing */
+  -khtml-border-radius: 5px; /* for old Konqueror browsers */
+}
+.img-rounded {
+  -moz-border-radius: 5px 5px 0px 0px;
+  -webkit-border-radius: 5px 5px 0px 0px;
+  border-radius: 5px 5px 0px 0px; /* future proofing */
+  -khtml-border-radius: 5px 5px 0px 0px; /* for old Konqueror browsers */
 }
 
 .pagination li {

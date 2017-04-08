@@ -12,7 +12,7 @@ router.get("/", function(req, res) {
 // ========= Authenticate Routes ==============
 // -- Register Route
 router.get("/register", function(req, res) {
-    res.render("register", {page: 'register'});
+    res.render("register", {pageSelect: 'register'});
 });
 // -- Create User Route
 router.post("/register", function(req, res) {
@@ -33,7 +33,7 @@ router.post("/register", function(req, res) {
 });
 // -- Login Route
 router.get("/login", function(req, res) {
-    res.render("login", {page: 'login'});
+    res.render("login", {pageSelect: 'login'});
 });
 router.post("/login", passport.authenticate("local",
   {
