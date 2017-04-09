@@ -16,8 +16,8 @@ var express       = require("express"),
 // require routes
 var commentRoutes    = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
-    indexRoutes      = require("./routes/index"),
-    uploadRoutes     = require("./routes/uploads");
+    indexRoutes      = require("./routes/index");
+    // uploadRoutes     = require("./routes/uploads");
 
 // ============== Configuration ===============
 // favicon
@@ -64,7 +64,7 @@ app.use(function(req, res, next) {
 app.use(indexRoutes);
 app.use("/campgrounds/", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
-app.use("/uploads/", uploadRoutes);
+// app.use("/uploads/", uploadRoutes);
 // ============================================
 
 // ================= Listener =================
