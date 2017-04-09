@@ -2,21 +2,26 @@
 
   <div class="container">
     <div class="row">
-      <div class="form-bg">
-          <h1>YelpCamp</h1>
-        <div class="form-center">
-          <form action="/login" method="post">
-            <div class="form-group">
-              <input class="form-control" type="text" name="username" value="" placeholder="username">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <span class="fa fa-sign-in"></span>
+            <h2></h2>
+            <div class="form-center">
+              <form action="/login" method="post">
+                <div class="form-group">
+                  <input class="form-control" type="text" name="username" value="" placeholder="username">
+                </div>
+                <div class="form-group">
+                  <input class="form-control" type="password" name="password" value="" placeholder="password">
+                </div>
+                <div class="form-group">
+                  <input class="btn btn-lg btn-primary" type="submit" name="" value="Log In">
+                </div>
+              </form>
+              <a href="/campgrounds">Back</a>
             </div>
-            <div class="form-group">
-              <input class="form-control" type="password" name="password" value="" placeholder="password">
-            </div>
-            <div class="form-group">
-              <input class="btn btn-lg btn-primary btn-block btn-log-reg" type="submit" name="" value="Log In">
-            </div>
-          </form>
-          <a href="/campgrounds">Back</a>
+          </div>
         </div>
       </div>
     </div>

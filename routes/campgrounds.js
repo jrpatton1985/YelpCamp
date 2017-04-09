@@ -4,7 +4,6 @@ var geocoder = require("geocoder");
 var Campground = require("../models/campground");
 var middleware = require("../middleware");
 
-
 /*
   Pagination provided by: Roman Tuomisto
   URL: https://www.udemy.com/the-web-developer-bootcamp/learn/v4/questions/1646592

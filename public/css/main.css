@@ -1,22 +1,169 @@
-/* ---- Footer Styles ---- */
-html {
-  position: relative;
-  min-height: 100%;
+body {
+  font-family: "Lato", sans-serif;
+  margin-bottom: 60px;
+}
+h1 {
+  text-align: center;
 }
 
-.footer {
-  position: absolute;
-  bottom: 0;
+/* ---- Form Styles ---- */
+.form-bg {
+  width: 60%;
+  margin: 0px auto;
+  padding: 15px 0 10px 0;
+  margin-bottom: 20px;
+
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px; /* future proofing */
+  -khtml-border-radius: 10px; /* for old Konqueror browsers */
+
+  -webkit-box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.4);
+  -moz-box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.4);
+  box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.4);
+
+  background: rgba(237,237,237,1);
+  background: -moz-linear-gradient(top, rgba(237,237,237,1) 0%, rgba(255,255,255,1) 50%, rgba(237,237,237,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(237,237,237,1)), color-stop(50%, rgba(255,255,255,1)), color-stop(100%, rgba(237,237,237,1)));
+  background: -webkit-linear-gradient(top, rgba(237,237,237,1) 0%, rgba(255,255,255,1) 50%, rgba(237,237,237,1) 100%);
+  background: -o-linear-gradient(top, rgba(237,237,237,1) 0%, rgba(255,255,255,1) 50%, rgba(237,237,237,1) 100%);
+  background: -ms-linear-gradient(top, rgba(237,237,237,1) 0%, rgba(255,255,255,1) 50%, rgba(237,237,237,1) 100%);
+  background: linear-gradient(to bottom, rgba(237,237,237,1) 0%, rgba(255,255,255,1) 50%, rgba(237,237,237,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#ededed', GradientType=0 );
+}
+
+.form-bg h1 {
+  color: lightsteelblue;
   width: 100%;
-  height: 60px;
-  background-color: #f5f5f5;
+  margin-top: -15px;
+  padding: 20px 0;
+
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+
+  -webkit-box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.4);
+  -moz-box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.4);
+  box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.4);
+
+  -moz-border-radius: 10px 10px 0 0;
+  -webkit-border-radius: 10px 10px 0 0;
+  border-radius: 10px 10px 0 0; /* future proofing */
+  -khtml-border-radius: 10px 10px 0 0; /* for old Konqueror browsers */
+
+  background: rgba(211,211,211,1);
+  background: -moz-linear-gradient(left, rgba(211,211,211,1) 0%, rgba(237,237,237,1) 50%, rgba(211,211,211,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(211,211,211,1)), color-stop(50%, rgba(237,237,237,1)), color-stop(100%, rgba(211,211,211,1)));
+  background: -webkit-linear-gradient(left, rgba(211,211,211,1) 0%, rgba(237,237,237,1) 50%, rgba(211,211,211,1) 100%);
+  background: -o-linear-gradient(left, rgba(211,211,211,1) 0%, rgba(237,237,237,1) 50%, rgba(211,211,211,1) 100%);
+  background: -ms-linear-gradient(left, rgba(211,211,211,1) 0%, rgba(237,237,237,1) 50%, rgba(211,211,211,1) 100%);
+  background: linear-gradient(to right, rgba(211,211,211,1) 0%, rgba(237,237,237,1) 50%, rgba(211,211,211,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3d3d3', endColorstr='#d3d3d3', GradientType=1 );
 }
 
-.container .text-muted {
-  margin: 20px 0;
+textarea.form-control {
+  height: 200px;
+  resize: vertical;
 }
-/* ---- End   Footer  ---- */
 
+@media (min-width: 768px)
+  and  (max-width: 991px) {
+    .form-bg {
+      width: 75%;
+    }
+  }
+
+@media only screen
+  and (max-width: 767px) {
+    .form-bg {
+      width: 75%;
+    }
+  }
+
+@media only screen
+  and (min-width: 375px)
+  and (max-width: 667px) {
+    .form-bg {
+      width: 85%;
+    }
+  }
+/* ---- End     Form  ---- */
+
+/* ---- Uplaods Page ---- */
+.panel {
+  width: 450px;
+  margin: 0 auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 15px;
+  text-align: center;
+
+  -webkit-box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.4);
+  -moz-box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.4);
+  box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.4);
+}
+
+.panel-body span {
+  font-size: 5em;
+  color: #9CA3A9;
+}
+
+.form-center {
+  width: 75%;
+  margin: 0px auto;
+}
+
+#panel-campground.form-center {
+  width: 90%;
+  text-align: justify;
+}
+
+@media only screen
+  and (min-width: 375px)
+  and (max-width: 667px) {
+    .panel {
+      width: 85%;
+    }
+    .form-center {
+      width: 90%;
+    }
+  }
+
+.upload-btn:focus {
+  outline: 0 !important;
+}
+
+.upload-btn {
+  color: #ffffff;
+  background-color: #F89406;
+  border: none;
+}
+
+.upload-btn:hover,
+.upload-btn:focus,
+.upload-btn:active,
+.upload-btn.active {
+  color: #ffffff;
+  background-color: #FA8900;
+  border: none;
+}
+
+#upload-input {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .main-container {
+    width: 100%;
+  }
+}
+
+@media (min-width: 992px) {
+  .main-container {
+    width: 450px;
+  }
+}
+/* ---- End  Uplaods ---- */
+
+/* ---- Campgrounds Page ---- */
 header.jumbotron {
   background: url('../../imgs/1132895352.png');
   background-attachment: fixed;
@@ -36,17 +183,52 @@ header.jumbotron {
   box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.6);
 }
 
-#newCamp {
-  text-transform: none;
+.flex {
+   display: flex;
+   flex-wrap: wrap;
+
+   padding-top: 18px;
+
+   -moz-border-radius: 10px;
+   -webkit-border-radius: 10px;
+   border-radius: 10px; /* future proofing */
+   -khtml-border-radius: 10px; /* for old Konqueror browsers */
+
+   background: rgba(211,211,211,1);
+   background: -moz-linear-gradient(left, rgba(211,211,211,1) 0%, rgba(237,237,237,1) 50%, rgba(211,211,211,1) 100%);
+   background: -webkit-gradient(left top, right top, color-stop(0%, rgba(211,211,211,1)), color-stop(50%, rgba(237,237,237,1)), color-stop(100%, rgba(211,211,211,1)));
+   background: -webkit-linear-gradient(left, rgba(211,211,211,1) 0%, rgba(237,237,237,1) 50%, rgba(211,211,211,1) 100%);
+   background: -o-linear-gradient(left, rgba(211,211,211,1) 0%, rgba(237,237,237,1) 50%, rgba(211,211,211,1) 100%);
+   background: -ms-linear-gradient(left, rgba(211,211,211,1) 0%, rgba(237,237,237,1) 50%, rgba(211,211,211,1) 100%);
+   background: linear-gradient(to right, rgba(211,211,211,1) 0%, rgba(237,237,237,1) 50%, rgba(211,211,211,1) 100%);
+   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3d3d3', endColorstr='#d3d3d3', GradientType=1 );
 }
 
-.thumbnail img {
-  width: 100%;
-}
 .thumbnail {
   padding: 0;
   border: 1px solid rgba(0, 0, 0, 0.5);
 }
+
+.thumbnail img {
+  width: 100%;
+  height: 225px;
+}
+
+@media only screen
+  and (min-width: 992px)
+  and (max-width: 1199px) {
+    .thumbnail img {
+      height: 175px;
+    }
+  }
+
+@media only screen
+  and (min-width: 375px)
+  and (max-width: 767px) {
+    .thumbnail img {
+      height: 300px;
+    }
+  }
 
 .thumbnail .caption-full {
   padding: 9px;
@@ -65,8 +247,19 @@ header.jumbotron {
   -khtml-border-radius: 5px 5px 0px 0px; /* for old Konqueror browsers */
 }
 
+#newCamp {
+  text-transform: none;
+}
+
 .pagination li {
   margin: 0 auto;
+}
+/* ---- Campgrounds Page ---- */
+
+/* ---- Campground Show Page ---- */
+img#thumbnail-show {
+  width: 100%;
+  height: auto;
 }
 
 #delete-form {
@@ -78,3 +271,32 @@ header.jumbotron {
     height: 400px;
     width: 100%;
 }
+
+.form-icon {
+  font-size: 2em;
+  color: #9CA3A9;
+}
+.comments-icon {
+  font-size: 3em;
+  float: left;
+}
+/* ---- End Campground Show  ---- */
+
+/* ---- Footer Styles ---- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+.container .text-muted {
+  margin: 20px 0;
+}
+/* ---- End   Footer  ---- */
