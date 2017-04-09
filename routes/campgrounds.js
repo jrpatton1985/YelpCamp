@@ -84,7 +84,7 @@ router.get("/page/:page", function(req, res, next) {
 // =========== Campground Routes ==============
 // -- New Route
 router.get("/new", middleware.isLoggedIn, function(req, res) {
-    res.render("campgrounds/new");
+    res.render("campgrounds/new", {pageSelect: 'new'});
 });
 // -- Show Route
 router.get("/:id", function(req, res) {
@@ -142,7 +142,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
 router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res) {
     // Find and pass the campground to be editted
     Campground.findById(req.params.id, function(err, foundCampground) {
-        res.render("campgrounds/edit", {campground: foundCampground});
+        res.render("campgrounds/edit", {campground: foundCampground, pageSelect: 'edit'});
     });
 });
 // -- Update Route

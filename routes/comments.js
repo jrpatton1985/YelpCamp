@@ -11,7 +11,7 @@ router.get("/new", middleware.isLoggedIn, function(req, res) {
         if (err) {
           console.log(err);
         } else {
-          res.render("comments/new", {campground: campground});
+          res.render("comments/new", {campground: campground, pageSelect: 'newcomment'});
         }
     });
 });
@@ -57,7 +57,7 @@ router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(req, 
               if (err) {
                 res.redirect("back");
               } else {
-                res.render("comments/edit", {campground: foundCampground, comment: foundComment});
+                res.render("comments/edit", {campground: foundCampground, comment: foundComment, pageSelect: 'editcomment'});
               }
           });
         }

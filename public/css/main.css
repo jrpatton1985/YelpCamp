@@ -5,89 +5,40 @@ body {
 h1 {
   text-align: center;
 }
+.container {
+  z-index: 1;
+}
+/* ---- Random Background Imgs ---- */
+.bgRandom {
+  z-index: -1;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  padding-top: 70px;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+.bgRandom.bgBlur {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+.bgRandom.bgBlurMin {
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
+}
+
+/* ---- End Random Background  ---- */
 
 /* ---- Form Styles ---- */
-.form-bg {
-  width: 60%;
-  margin: 0px auto;
-  padding: 15px 0 10px 0;
-  margin-bottom: 20px;
-
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px; /* future proofing */
-  -khtml-border-radius: 10px; /* for old Konqueror browsers */
-
-  -webkit-box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.4);
-  -moz-box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.4);
-  box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.4);
-
-  background: rgba(237,237,237,1);
-  background: -moz-linear-gradient(top, rgba(237,237,237,1) 0%, rgba(255,255,255,1) 50%, rgba(237,237,237,1) 100%);
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(237,237,237,1)), color-stop(50%, rgba(255,255,255,1)), color-stop(100%, rgba(237,237,237,1)));
-  background: -webkit-linear-gradient(top, rgba(237,237,237,1) 0%, rgba(255,255,255,1) 50%, rgba(237,237,237,1) 100%);
-  background: -o-linear-gradient(top, rgba(237,237,237,1) 0%, rgba(255,255,255,1) 50%, rgba(237,237,237,1) 100%);
-  background: -ms-linear-gradient(top, rgba(237,237,237,1) 0%, rgba(255,255,255,1) 50%, rgba(237,237,237,1) 100%);
-  background: linear-gradient(to bottom, rgba(237,237,237,1) 0%, rgba(255,255,255,1) 50%, rgba(237,237,237,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#ededed', GradientType=0 );
-}
-
-.form-bg h1 {
-  color: lightsteelblue;
-  width: 100%;
-  margin-top: -15px;
-  padding: 20px 0;
-
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
-
-  -webkit-box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.4);
-  -moz-box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.4);
-  box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.4);
-
-  -moz-border-radius: 10px 10px 0 0;
-  -webkit-border-radius: 10px 10px 0 0;
-  border-radius: 10px 10px 0 0; /* future proofing */
-  -khtml-border-radius: 10px 10px 0 0; /* for old Konqueror browsers */
-
-  background: rgba(211,211,211,1);
-  background: -moz-linear-gradient(left, rgba(211,211,211,1) 0%, rgba(237,237,237,1) 50%, rgba(211,211,211,1) 100%);
-  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(211,211,211,1)), color-stop(50%, rgba(237,237,237,1)), color-stop(100%, rgba(211,211,211,1)));
-  background: -webkit-linear-gradient(left, rgba(211,211,211,1) 0%, rgba(237,237,237,1) 50%, rgba(211,211,211,1) 100%);
-  background: -o-linear-gradient(left, rgba(211,211,211,1) 0%, rgba(237,237,237,1) 50%, rgba(211,211,211,1) 100%);
-  background: -ms-linear-gradient(left, rgba(211,211,211,1) 0%, rgba(237,237,237,1) 50%, rgba(211,211,211,1) 100%);
-  background: linear-gradient(to right, rgba(211,211,211,1) 0%, rgba(237,237,237,1) 50%, rgba(211,211,211,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3d3d3', endColorstr='#d3d3d3', GradientType=1 );
-}
-
-textarea.form-control {
-  height: 200px;
-  resize: vertical;
-}
-
-@media (min-width: 768px)
-  and  (max-width: 991px) {
-    .form-bg {
-      width: 75%;
-    }
-  }
-
-@media only screen
-  and (max-width: 767px) {
-    .form-bg {
-      width: 75%;
-    }
-  }
-
-@media only screen
-  and (min-width: 375px)
-  and (max-width: 667px) {
-    .form-bg {
-      width: 85%;
-    }
-  }
-/* ---- End     Form  ---- */
-
-/* ---- Uplaods Page ---- */
 .panel {
   width: 450px;
   margin: 0 auto;
@@ -96,6 +47,8 @@ textarea.form-control {
   margin-bottom: 15px;
   text-align: center;
 
+  background: rgba(255, 255, 255, 0.8);
+
   -webkit-box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.4);
   -moz-box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.4);
   box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.4);
@@ -103,7 +56,6 @@ textarea.form-control {
 
 .panel-body span {
   font-size: 5em;
-  color: #9CA3A9;
 }
 
 .form-center {
@@ -114,6 +66,11 @@ textarea.form-control {
 #panel-campground.form-center {
   width: 90%;
   text-align: justify;
+}
+
+textarea.form-control {
+  height: 200px;
+  resize: vertical;
 }
 
 @media only screen
@@ -161,7 +118,7 @@ textarea.form-control {
     width: 450px;
   }
 }
-/* ---- End  Uplaods ---- */
+/* ---- End     Form  ---- */
 
 /* ---- Campgrounds Page ---- */
 header.jumbotron {
@@ -274,7 +231,6 @@ img#thumbnail-show {
 
 .form-icon {
   font-size: 2em;
-  color: #9CA3A9;
 }
 .comments-icon {
   font-size: 3em;
