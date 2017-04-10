@@ -16,7 +16,7 @@
       <script type="text/javascript" src="../../../js/randombg.js"></script>
     <% } else if (typeof pageSelect !== 'undefined' && pageSelect === 'editcomment') { %>
       <script type="text/javascript" src="../../../../js/randombg.js"></script>
-    <% } else { %>
+    <% } else if (typeof pageSelect !== 'undefined' && (pageSelect === 'register' || pageSelect === 'login')) { %>
       <script type="text/javascript" src="js/randombg.js"></script>
     <% } %>
 
