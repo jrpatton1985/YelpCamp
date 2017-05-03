@@ -20,7 +20,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
     // find campground by id
     Campground.findById(req.params.id, function(err, campground) {
         if (err) {
-          redirect("/campgrounds");
+          res.redirect("/campgrounds");
         } else {
           // create new comments
           Comment.create(req.body.comment, function(err, comment){

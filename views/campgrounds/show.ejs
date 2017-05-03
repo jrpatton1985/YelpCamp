@@ -2,12 +2,20 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3">
-        <p class="lead">YelpCamp</p>
+        <h4>
+          <a href="https://www.google.com/maps/place/<%= campground.lat %>,<%= campground.lng %>/@<%= campground.lat %>,<%= campground.lng %>,8z">
+            <%=campground.location %>
+          </a>
+        </h4>
+
+        <!--
         <div class="list-group">
           <li class="list-group-item active">Info 1</li>
           <li class="list-group-item">Info 2</li>
           <li class="list-group-item">Info 3</li>
         </div>
+        -->
+
         <div id="map"></div>
       </div>
 
@@ -22,11 +30,52 @@
                 $9.00/night
               <% } %>
             </h4>
-            <h4><a href="#"><%=campground.name %></a></h4>
+            <h4><a href="#"><%=campground.name %></a> <span class="rating-star"><strong> <%= campground.rating.toFixed(1) %></strong></span></h4>
+
             <p><%=campground.description %></p>
-            <p><em>Submitted by: <%=campground.author.username %>, <%= moment(campground.createdAt).fromNow() %></em></p>
+
+            <% if (currentUser) { %>
+              <% var found = false; %>
+              <% var rated = 0; %>
+              <% for (var i = 0; i < campground.ratings.length; i ++) { %>
+                <% if (campground.ratings[i].author.id.equals(currentUser._id)) { %>
+                    <% found = true; %>
+                    <% rated = campground.ratings[i].rating; %>
+                    <% break; %>
+                <% } %>
+              <% } %>
+
+              <% if (found) { %>
+                <label for="rating">Your rating:</label>
+                <div id="rating" class="starability-result" data-rating="<%=rated %>" aria-describedby="rated-element">
+                  <%=rated %> stars
+                </div>
+              <% } else { %>
+                <form action="/campgrounds/<%=campground._id %>/ratings" method="POST">
+                  <div class="form-group">
+                    <label for="rating">Leave a rating:</label>
+                    <fieldset class="starability-basic form-group" id="rating">
+                      <input type="radio" id="first-rate5" name="rating[rating]" value="5">
+                      <label for="first-rate5" title="Awesome">5 Stars</label>
+                      <input type="radio" id="first-rate4" name="rating[rating]" value="4">
+                      <label for="first-rate4" title="Very Good">4 Stars</label>
+                      <input type="radio" id="first-rate3" name="rating[rating]" value="3">
+                      <label for="first-rate3" title="Average">3 Stars</label>
+                      <input type="radio" id="first-rate2" name="rating[rating]" value="2">
+                      <label for="first-rate2" title="Mediocre">2 Stars</label>
+                      <input type="radio" id="first-rate1" name="rating[rating]" value="1">
+                      <label for="first-rate1" title="Bad">1 Star</label>
+                    </fieldset>
+                    <input type="submit" class="btn btn-sm btn-success" value="Rate">
+                  </div>
+                </form>
+              <% } %>
+            <% } %>
+
+            <p><em>Campground by: <%=campground.author.username %>, <%= moment(campground.createdAt).fromNow() %></em></p>
 
             <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
+              <hr>
               <a class="btn btn-warning" href="/campgrounds/<%=campground._id%>/edit">Edit</a>
               <form id="delete-form" action="/campgrounds/<%=campground._id %>?_method=DELETE" method="post">
                 <input class="btn btn-danger" type="submit" name="" value="Delete">
@@ -44,7 +93,7 @@
           <hr>
           <% campground.comments.forEach(function(comment) { %>
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-12 comments">
                 <strong><%=comment.author.username %></strong>
                 <span class="pull-right"><%=moment(comment.createdAt).fromNow() %></span>
                 <p><%=comment.text %></p>

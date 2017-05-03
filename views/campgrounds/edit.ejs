@@ -13,11 +13,11 @@
               <form action="/campgrounds/<%=campground._id %>/?_method=PUT" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                   <label for="name">Name</label>
-                  <input class="form-control" type="text" name="campground[name]" value="<%=campground.name %>" placeholder="name">
+                  <input class="form-control" type="text" name="name" value="<%=campground.name %>" placeholder="name">
                 </div>
                 <div class="form-group">
                   <label for="Price">Price</label>
-                  <input class="form-control" type="number" name="campground[price]" value="<%=campground.price %>" placeholder="price" min="0.01" step="0.01">
+                  <input class="form-control" type="number" name="price" value="<%=campground.price %>" placeholder="price" min="0.01" step="0.01">
                 </div>
                 <div class="form-group">
                   <label for="image">Image</label>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="form-group">
                   <label for="description">Description</label>
-                  <textarea class="form-control" name="campground[description]" placeholder="description"><%=campground.description %></textarea>
+                  <textarea class="form-control" name="description" placeholder="description"><%=campground.description %></textarea>
                 </div>
                 <div class="form-group text-center">
                   <input class="btn btn-lg btn-primary" type="submit" value="Update">

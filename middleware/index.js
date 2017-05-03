@@ -1,5 +1,7 @@
-var Campground = require("../models/campground");
-var Comment = require("../models/comment");
+var Campground = require("../models/campground"),
+    Comment    = require("../models/comment"),
+    Rating     = require("../models/rating");
+
 // =============== Middleware =================
 var middlewareObj = {};
 
@@ -55,6 +57,25 @@ middlewareObj.checkCommentOwnership = function(req, res, next) {
   }
 }
 
+middlewareObj.checkRatingExists = function(req, res, next) {
+    Campground.findById(req.params.id).populate("ratings").exec(function(err, foundCampground) {
+        if (err) {
+            req.flash("error", err.message);
+            res.redirect('back');
+        }
+
+        // find rating based on rater's id
+        for (var i = 0; i < foundCampground.ratings.length; i++) {
+            if (foundCampground.ratings[i].author.id.equals(req.user.id)) {
+                req.flash('success', "You have already left a rating for this campground.");
+                return res.redirect('/campgrounds/' + foundCampground._id);
+            }
+        }
+        // if no rating found, continue
+        next();
+    });
+}
+
 middlewareObj.isLoggedIn = function(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
@@ -62,6 +83,29 @@ middlewareObj.isLoggedIn = function(req, res, next) {
     // Set flash message
     req.flash("error", "You need to be logged in to do that.");
     res.redirect("/login");
+}
+
+middlewareObj.loginValidation = function(req, res, next) {
+    // Sanitize login
+    req.sanitize('username').trim();
+    req.sanitize('password').trim();
+
+    // Validation
+    req.check('username', 'Username is required.').notEmpty();
+    req.check('password', 'Password is required.').notEmpty();
+
+    // Check for errors
+    var errors = req.validationErrors();
+    if (errors) {
+        var msg = [];
+        errors.forEach(function(error) {
+            msg.push(error.msg);
+        });
+        req.flash("error", msg);
+        res.redirect('back');
+    } else {
+      next();
+    }
 }
 // ============================================
 

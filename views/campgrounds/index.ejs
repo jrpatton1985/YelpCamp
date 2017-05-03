@@ -1,19 +1,22 @@
 <% include ../partials/header %>
 
+  <div class="bgRandom bgBlur"></div>
   <div class="container">
-    <header class="jumbotron">
-      <div class="container">
-        <h1><span class="glyphicon glyphicon-tent"></span>Welcome to YelpCamp</h1>
-        <p>Discover amazing campgrounds</p>
+    <div class="well">
+      <header class="jumbotron">
+        <div class="container">
+          <h1><span class="glyphicon glyphicon-tent"></span>Welcome to YelpCamp</h1>
+          <p>Discover amazing campgrounds</p>
 
-        <% if(currentUser) { %>
-          <p>
-            <a id="newCamp" class="btn btn-primary btn-large" href="/campgrounds/new">New Campground</a>
-          </p>
-        <% } %>
+          <% if(currentUser) { %>
+            <p>
+              <a id="newCamp" class="btn btn-primary btn-large" href="/campgrounds/new">New Campground</a>
+            </p>
+          <% } %>
 
-      </div>
-    </header>
+        </div>
+      </header>
+    </div>
 
     <div class="row text-center flex">
       <% campgrounds.forEach(function(campground) { %>
@@ -24,7 +27,7 @@
                 <h4><%=campground.name %></h4>
               </div>
               <p>
-                <a href="/campgrounds/<%=campground._id %>" class="btn btn-primary"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;&nbsp;More Info</a>
+                <a href="/campgrounds/<%=campground._id %>" class="btn btn-info"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;&nbsp;More Info</a>
               </p>
           </div>
         </div>
@@ -75,7 +78,33 @@
       </nav>
     </div>
     <!-- End Pagination -->
-
   </div>
+
+  <!-- jQuery -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    var bgImgs = [
+      'http://i.imgur.com/K3mPv14.jpg',
+      'http://i.imgur.com/SBEmFpv.jpg',
+      'http://i.imgur.com/emvhOnb.jpg',
+      'http://i.imgur.com/2LSMCmJ.jpg',
+      'http://i.imgur.com/TVGe0Ef.jpg'
+    ];
+
+    $('.bgRandom').css({
+      'background-image': 'url(' + bgImgs[Math.floor(Math.random() * bgImgs.length)] + ')'
+    });
+
+    function mobileViewUpdate() {
+      var viewportWidth = $(window).width();
+      if (viewportWidth < 425) {
+        $("header").removeClass("jumbotron");
+      } else {
+        $("header").addClass("jumbotron");
+      }
+    }
+    $(document).ready(mobileViewUpdate);
+    $(window).resize(mobileViewUpdate);
+  </script>
 
 <% include ../partials/footer %>

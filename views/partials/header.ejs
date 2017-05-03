@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/starability-all.min.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
   </head>
   <body>
@@ -31,7 +32,7 @@
                       <li class="<%= typeof pageSelect !== 'undefined' && pageSelect === 'login' ? 'active' : '' %>"><a href="/login"><i class="fa fa-sign-in"> </i> Log In</a></li>
                       <li class="<%= typeof pageSelect !== 'undefined' && pageSelect === 'register' ? 'active' : '' %>"><a href="/register"><i class="fa fa-user-plus"> </i> Sign Up</a></li>
                   <% } else { %>
-                      <li><a href="#"><i class="fa fa-user"> </i> <%= currentUser.username %></a></li>
+                      <li class="<%= typeof pageSelect !== 'undefined' && pageSelect === 'profile' ? 'active' : '' %>"><a href="/profile"><i class="fa fa-user"> </i> <%= currentUser.username %></a></li>
                       <li><a href="/logout"><i class="fa fa-sign-out"> </i> Logout</a></li>
                   <% } %>
               </ul>
@@ -41,9 +42,12 @@
 
     <div class="container">
       <% if (error && error.length > 0) {%>
+        <% error.forEach(function(err) { %>
           <div class="alert alert-danger" role="alert">
-            <i class="glyphicon glyphicon-remove"></i> <%=error %>
+            <i class="glyphicon glyphicon-remove"></i> <%=err %>
           </div>
+        <% }); %>
+
       <% } %>
       <% if (success && success.length > 0) {%>
           <div class="alert alert-success" role="alert">

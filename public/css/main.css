@@ -121,7 +121,19 @@ textarea.form-control {
 /* ---- End     Form  ---- */
 
 /* ---- Campgrounds Page ---- */
+.well {
+  padding: 20px 50px;
+  background: rgba(245, 245, 245, 0.7);
+
+  z-index: 1000;
+
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+  text-transform: uppercase;
+}
+
 header.jumbotron {
+  /*
   background: url('../../imgs/1132895352.png');
   background-attachment: fixed;
   background-size: cover;
@@ -129,15 +141,20 @@ header.jumbotron {
   background-repeat: no-repeat;
   overflow-x: hidden;
   transform: translateZ(-1px);
-  z-index: -1;
+  */
+  background-color: rgba(0,0,0,0);
+  z-index: 1000;
 
   color: white;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
   text-transform: uppercase;
 
+  /*
   -webkit-box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.6);
   -moz-box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.6);
   box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.6);
+  */
+  margin-bottom: 0;
 }
 
 .flex {
@@ -185,6 +202,10 @@ header.jumbotron {
     .thumbnail img {
       height: 300px;
     }
+
+    header.jumbotron {
+      padding: 0;
+    }
   }
 
 .thumbnail .caption-full {
@@ -229,12 +250,36 @@ img#thumbnail-show {
     width: 100%;
 }
 
+.starability-basic {
+  min-height: 0;
+}
+
+.rating-star {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAA8CAMAAABGivqtAAAAxlBMVEUAAACZmZn2viTHuJ72viOampqampr1viSampr3vySampqdnZ34wiX1vSSampr1vSOZmZmampr1viT2vSOampr2viT2viSampr2viSampr2vyX4vyWbm5v3vSSdnZ32wSadnZ36wCWcnJyZmZn/wSr/2ySampr2vSP2viSZmZn2vSSZmZn2vST2viSampr2viSbm5ubm5uZmZn1vSSampqbm5v2vSWampqampr3vSf5wiT5vyagoKD/xCmkpKT/yCSZmZn1vSO4V2dEAAAAQHRSTlMA+vsG9fO6uqdgRSIi7+3q39XVqZWVgnJyX09HPDw1NTAwKRkYB+jh3L6+srKijY2Ef2lpYllZUU5CKigWFQ4Oneh1twAAAZlJREFUOMuV0mdzAiEQBmDgWq4YTWIvKRqT2Htv8P//VJCTGfYQZnw/3fJ4tyO76KE0m1b2fZu+U/pu4QGlA7N+Up5PIz9d+cmkbSrSNr9seT3GKeNYIyeO5j16S28exY5suK0U/QKmmeCCX6xs22hJLVkitMImxCvEs8EG3SCRCN/ViFPqnq5epIzZ07QJJvkM9Tkz1xnkmXbfSvR7f4H8AtXBkLGj74mMvjM1+VHZpAZ4LM4K/LBWEI9jwP71v1ZEQ6dyvQMf8A/1pmdZnKce/VH1iIsdte4U8VEtY23xOujxtFpWDgKbfjD2YeEhY0OzfjGeLyO/XfnNpAcmcjDwKOXRfU1IyiTRyEkaiz67pb9oJHJb9vVqKfgjLBPyF5Sq9T0KmSUhQmtiQrJGPHVi0DoSabj31G2gW3buHd0pY85lNdcCk8xlNDPXMuSyNiwl+theIb9C7RLIpKvviYy+M6H8qGwSAp6Is19+GP6KxwnggJ/kq6Jht5rnRQA4z9zyRRaXssvyqp5I6Vutv0vkpJaJtnjpz/8B19ytIayazLoAAAAASUVORK5CYII=");
+  background-repeat: no-repeat;
+  background-position: 0 -30px;
+  padding: 10px 35px;
+}
+
+.starability-result {
+  margin-bottom: 10px;
+}
+
 .form-icon {
   font-size: 2em;
 }
 .comments-icon {
   font-size: 3em;
   float: left;
+}
+.comments {
+  text-shadow: none;
+  text-transform: none;
+  color: #333;
+}
+.btn-success {
+  text-shadow: none;
+  text-transform: none;
 }
 /* ---- End Campground Show  ---- */
 
