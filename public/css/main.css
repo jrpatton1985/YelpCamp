@@ -5,6 +5,11 @@ body {
 h1 {
   text-align: center;
 }
+
+#flash {
+  visibility: hidden;
+}
+
 .container {
   z-index: 1;
 }

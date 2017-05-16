@@ -10,6 +10,11 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/starability-all.min.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <!-- Scroll Reveal  -->
+    <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+    <script type="text/javascript">
+      window.sr = ScrollReveal();
+    </script>
   </head>
   <body>
 
@@ -29,7 +34,9 @@
               <ul class="nav navbar-nav navbar-right">
                       <li class="<%= typeof pageSelect !== 'undefined' && pageSelect === 'campgrounds' ? 'active' : '' %>"><a href="/campgrounds"><i class="glyphicon glyphicon-tent"> </i> Home</a></li>
                   <% if(!currentUser){ %>
-                      <li class="<%= typeof pageSelect !== 'undefined' && pageSelect === 'login' ? 'active' : '' %>"><a href="/login"><i class="fa fa-sign-in"> </i> Log In</a></li>
+                      <li class="<%= typeof pageSelect !== 'undefined' && pageSelect === 'login' ? 'active' : '' %>">
+                        <a href="/login" id="login"><i class="fa fa-sign-in"> </i> Log In</a>
+                      </li>
                       <li class="<%= typeof pageSelect !== 'undefined' && pageSelect === 'register' ? 'active' : '' %>"><a href="/register"><i class="fa fa-user-plus"> </i> Sign Up</a></li>
                   <% } else { %>
                       <li class="<%= typeof pageSelect !== 'undefined' && pageSelect === 'profile' ? 'active' : '' %>"><a href="/profile"><i class="fa fa-user"> </i> <%= currentUser.username %></a></li>
@@ -40,18 +47,20 @@
         </div>
     </nav>
 
-    <div class="container">
-      <% if (error && error.length > 0) {%>
-        <% error.forEach(function(err) { %>
-          <div class="alert alert-danger" role="alert">
-            <i class="glyphicon glyphicon-remove"></i> <%=err %>
-          </div>
-        <% }); %>
+    <section id="flash">
+      <div class="container">
+        <% if (error && error.length > 0) {%>
+          <% error.forEach(function(err) { %>
+            <div class="alert alert-danger" role="alert">
+              <i class="glyphicon glyphicon-remove"></i> <%=err %>
+            </div>
+          <% }); %>
 
-      <% } %>
-      <% if (success && success.length > 0) {%>
-          <div class="alert alert-success" role="alert">
-            <i class="glyphicon glyphicon-ok"></i> <%=success %>
-          </div>
-      <% } %>
-    </div>
+        <% } %>
+        <% if (success && success.length > 0) {%>
+            <div class="alert alert-success" role="alert">
+              <i class="glyphicon glyphicon-ok"></i> <%=success %>
+            </div>
+        <% } %>
+      </div>
+    </section>
