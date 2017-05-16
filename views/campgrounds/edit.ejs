@@ -11,6 +11,7 @@
 
             <div id="panel-campground" class="form-center">
               <form action="/campgrounds/<%=campground._id %>/?_method=PUT" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="origImage" value="<%=campground.image %>">
                 <div class="form-group">
                   <label for="name">Name</label>
                   <input class="form-control" type="text" name="name" value="<%=campground.name %>" placeholder="name">

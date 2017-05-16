@@ -2,7 +2,10 @@ var express    = require("express"),
     router     = express.Router(),
     geocoder   = require("geocoder"),
     multer     = require("multer"),
+    multerS3   = require("multer-s3"),
+    AWS        = require("aws-sdk"),
     path       = require("path"),
+    url        = require("url"),
     Campground = require("../models/campground"),
     Comment    = require("../models/comment"),
     middleware = require("../middleware");
@@ -22,6 +25,18 @@ function validateCampground(req, res) {
     req.check('description', 'Campground description is required.').notEmpty();
 
     return req.validationErrors();
+}
+
+function getCampgroundImage(req, res) {
+    Campground.findById(req.params.id, function(err, foundCampground) {
+        if (err) {
+          req.flash("error", "Campground not found.");
+          res.redirect("back");
+        } else {
+          console.log(foundCampground);
+          return foundCampground.image;
+        }
+    });
 }
 
  /*
@@ -81,7 +96,26 @@ function paginate(req, res, next) {
     });
 }
 
-// ===============  Upload  =================
+// ============== Upload AWS ================
+// load AWS credentials from environment variables, by default
+var s3 = new AWS.S3();
+s3.config.update({
+  signatureVersion: 'v4'
+});
+var s3_Bucket = process.env.S3_BUCKET;
+var storage = multerS3({
+    s3: s3,
+    bucket: s3_Bucket,
+    acl: 'public-read',
+    metadata: function(req, file, cb) {
+        cb(null, {fieldName: file.fieldname});
+    },
+    key: function(req, file, cb) {
+        cb(null, "uploads/" + Date.now().toString() + "-" + file.originalname);
+    }
+});
+
+/* ===============  Upload  =================
 var storage = multer.diskStorage({
     destination: function(req, file, callback) {
       callback(null, './public/uploads');
@@ -90,6 +124,8 @@ var storage = multer.diskStorage({
       callback(null, Date.now() + '-' + file.originalname);
     }
 });
+// ===============  Upload  ================= */
+
 var maxSize = 10 * 1024 * 1024;
 var upload = multer({
   storage : storage,
@@ -164,6 +200,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
 
     upload(req, res, function(err) {
         if (err) {
+          console.log(err);
           return res.send("An error occurred when uploading file.");
         }
 
@@ -186,7 +223,10 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
 
             //var image = req.body.image;
             if (req.file) {
-                var image = '/uploads/' + req.file.filename;
+                //console.log(req.file);
+                //var image = '/uploads/' + req.file.filename;
+                // S3 object?
+                var image = req.file.location;
             } else {
                 var image = '/uploads/no-image.jpg';
             }
@@ -260,10 +300,23 @@ router.put("/:id", middleware.checkCampgroundOwnership, function(req, res) {
             if (req.body.removeImage) {
                 req.body.image = '/uploads/no-image.jpg';
             } else if (req.file) {
-                req.body.image = '/uploads/' + req.file.filename;
+                //req.body.image = '/uploads/' + req.file.filename;
+
+                // delete old file
+                var oldKey = url.parse(req.body.origImage).pathname.substr(1);
+                var params = {
+                    Bucket: process.env.S3_BUCKET,
+                    Key: oldKey
+                };
+                s3.deleteObject(params, function(err, data) {
+                    if (err) console.log(err, err.stack);
+                });
+
+                // set new file location
+                req.body.image = req.file.location;
             } else {
                 req.flash("error", "Please choose an Image file or check 'Remove Image'.");
-                return res.redirect("/campgrounds/" + req.params.id + "/edit")
+                return res.redirect("/campgrounds/" + req.params.id + "/edit");
             }
             // find and save location
             geocoder.geocode(req.body.location, function (err, data) {
@@ -301,6 +354,17 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res) {
       if (err) {
           res.redirect("/campgrounds");
       } else {
+
+        // delete image file
+        var oldKey = url.parse(foundCampground.image).pathname.substr(1);
+        var params = {
+            Bucket: process.env.S3_BUCKET,
+            Key: oldKey
+        };
+        s3.deleteObject(params, function(err, data) {
+            if (err) console.log(err, err.stack);
+        });
+
         Comment.remove({"_id": {"$in": foundCampground.comments}}, function(err) {
             if (err) {
                 res.redirect("/campgrounds");

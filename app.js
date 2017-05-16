@@ -61,10 +61,10 @@ app.locals.moment = require('moment');
 app.use(cookieParser());
 app.use(require("express-session")({
     secret: "Stewie is the most awesome cat ever!",
-    cookie: {maxAge: 60 * 60 * 1000},    // 1 hour
+    //cookie: {maxAge: 60 * 60 * 1000},    // 1 hour
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore({ url:process.env.DATABASEURL, autoReconnect: true })
+    //store: new MongoStore({ url:process.env.DATABASEURL, autoReconnect: true })
 }));
 app.use(passport.initialize());
 app.use(passport.session());
