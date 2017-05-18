@@ -45,7 +45,7 @@ function getCampgroundImage(req, res) {
  */
 // =============== Pagination =================
 function paginate(req, res, next) {
-    var perPage = 8;
+    var perPage = 4;
     var page = req.params.page || 1;
     var output = {
         data: null,
@@ -87,6 +87,7 @@ function paginate(req, res, next) {
                         output.items.end = output.items.total;
                       }
 
+                      //console.log(output);
                       res.render("campgrounds/index", {
                           campgrounds: allCampgrounds,
                           output: output,
@@ -138,6 +139,7 @@ var upload = multer({
     },
   limits: { fileSize: maxSize }
 }).single('image');
+
 /* -- Index Route
 router.get("/", function(req, res) {
     // get all campgrounds from db
