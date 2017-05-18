@@ -402,3 +402,32 @@ html {
   margin: 20px 0;
 }
 /* ---- End   Footer  ---- */
+
+.close {
+  width: 16px;
+  height: 16px;
+  padding: 0px;
+  position: absolute;
+  top: -7px;
+  right: 7px;
+  bottom: auto;
+  left: auto;
+  color: rgb(255, 255, 255);
+  background-color: rgb(34, 34, 34);
+  border: 1px solid rgb(17, 17, 17);
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  font-stretch: normal;
+  font-size: 10px;
+  line-height: 16px;
+  text-shadow: rgb(0, 0, 0) 0px 1px 0px;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 9px;
+  opacity: 0.85;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.2s ease;
+  box-sizing: content-box;
+}
