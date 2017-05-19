@@ -210,6 +210,15 @@ textarea.form-control {
   overflow: hidden;
 }
 
+.search-results {
+  color: white;
+  text-align: left;
+  text-shadow: 1px 1px black;
+}
+.search-results h3 {
+  margin-top: 0px;
+}
+
 .flex {
    display: flex;
    flex-wrap: wrap;

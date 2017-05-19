@@ -39,6 +39,11 @@ function getCampgroundImage(req, res) {
     });
 }
 
+// Define escapeRegex function for search feature
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
  /*
   Pagination provided by: Roman Tuomisto
   URL: https://www.udemy.com/the-web-developer-bootcamp/learn/v4/questions/1646592
@@ -154,7 +159,28 @@ router.get("/", function(req, res) {
 */
 // -- Index Pagination Route
 router.get("/", function(req, res, next) {
-    paginate(req, res, next);
+    if (req.query.search) {
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        // get campgrounds by search query
+        Campground.find({name: regex}, function(err, allCampgrounds) {
+            if (err) {
+              console.log(err);
+              req.flash('error', err.message);
+              res.redirect('/campgrounds');
+            }
+
+            if (allCampgrounds.length < 1) {
+              // no campgrounds found
+              req.flash('error', "Sorry, no campgrounds found by name that contains, " + req.query.search);
+              res.redirect('/campgrounds');
+            } else {
+              res.render('campgrounds/search', {campgrounds: allCampgrounds});
+            }
+
+        });
+    } else {
+        paginate(req, res, next);
+    }
 });
 // -- Get Pagination Route (next page)
 router.get("/page/:page", function(req, res, next) {
