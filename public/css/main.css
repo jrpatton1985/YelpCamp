@@ -168,8 +168,7 @@ ul.dropdown-menu .divider {
 }
 
 .panel-profile {
-  width: 80%;
-  max-width: 768px;
+  width: 85%;
   text-align: left;
   padding: 10px 15px;
   margin-bottom: 15px;
@@ -182,11 +181,9 @@ ul.dropdown-menu .divider {
 }
 
 .profile-img {
-  max-width: 315px;
-  min-height: 270px;
-  float: left;
   text-align: center;
   padding: 0px 10px 10px 0px;
+  margin: 0 auto;
 }
 
 .profile-img img {
@@ -320,7 +317,7 @@ textarea.form-control {
 
 .thumbnail {
   padding: 0;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid #e3e3e3;
 }
 
 .thumbnail img {
@@ -411,6 +408,10 @@ textarea.form-control {
 /* ---- Campgrounds Page ---- */
 
 /* ---- Campground Show Page ---- */
+.caption-full {
+  background-color: #f5f5f5;
+}
+
 img#thumbnail-show {
   width: 100%;
   height: auto;

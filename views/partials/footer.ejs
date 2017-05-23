@@ -23,7 +23,7 @@
     <% if (typeof pageSelect !== 'undefined' && pageSelect === 'upload') { %>
       <script type="text/javascript" src="js/upload.js"></script>
     <% } %>
-    
+
     <script type="text/javascript">
       // scroll reveal
       sr.reveal('#flash',
@@ -49,6 +49,11 @@
         });
       }
       setInterval(function(){ tickOut () }, 5500);
+
+      // tool tip
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      })
     </script>
 
   </body>
