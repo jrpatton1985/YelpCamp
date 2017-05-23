@@ -12,6 +12,10 @@ var express       = require("express"),
     methodOverride = require("method-override"),
     expValidator  = require("express-validator"),
     MongoStore    = require("connect-mongo/es5")(session),
+    nodemailer    = require("nodemailer"),
+    bcrypt        = require("bcrypt-nodejs"),
+    async         = require("async"),
+    crypto        = require('crypto'),
     Campground    = require("./models/campground"),
     Comment       = require("./models/comment"),
     User          = require("./models/user"),
@@ -22,7 +26,7 @@ var commentRoutes    = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes      = require("./routes/index"),
     ratingRoutes     = require("./routes/ratings");
-    // uploadRoutes     = require("./routes/uploads");
+    uploadRoutes     = require("./routes/uploads");
 
 // ============== Configuration ===============
 // favicon
@@ -66,11 +70,32 @@ app.use(require("express-session")({
     saveUninitialized: false,
     //store: new MongoStore({ url:process.env.DATABASEURL, autoReconnect: true })
 }));
+
+// Passport
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.use(new LocalStrategy(function(username, password, done) {
+  User.findOne({ username: username }, function(err, user) {
+    if (err) return done(err);
+    if (!user) return done(null, false, { message: 'Incorrect username.' });
+    user.comparePassword(password, function(err, isMatch) {
+      if (isMatch) {
+        return done(null, user);
+      } else {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+    });
+  });
+}));
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
 
 // User & Flash information accessible to all routers
 app.use(function(req, res, next) {
@@ -92,7 +117,7 @@ app.use(indexRoutes);
 app.use("/campgrounds/", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/campgrounds/:id/ratings", ratingRoutes);
-// app.use("/uploads/", uploadRoutes);
+app.use("/uploads/", uploadRoutes);
 // ============================================
 
 // ================= Listener =================

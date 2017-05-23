@@ -37,6 +37,23 @@ li.dropdown:hover > .dropdown-menu {
   .container-top {
     padding-right: 15px;
   }
+
+  #ticker {
+    display: none;
+  }
+}
+
+ul#ticker {
+  color: #777;
+  height: 40px;
+  overflow: hidden;
+  list-style: none;
+}
+
+#ticker li {
+  height:38px;
+  margin-top: 17px;
+  margin-left: -20px;
 }
 
 /* ---- Random Background Imgs ---- */
@@ -127,6 +144,17 @@ ul.dropdown-menu .divider {
   margin: 5px 0;
 }
 
+.forgot-link-parent {
+  width: 100%;
+  text-align: right;
+  margin: 75px 0 0;
+}
+
+.forgot-link {
+  display: inline-block;
+  padding: 0;
+}
+
 .form-control {
   height: 46px;
 }
@@ -137,6 +165,43 @@ ul.dropdown-menu .divider {
 
 .form-center {
   margin: 0px auto;
+}
+
+.panel-profile {
+  width: 80%;
+  max-width: 768px;
+  text-align: left;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+}
+
+.profile-heading {
+  font-size: 1.5em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.profile-img {
+  max-width: 315px;
+  min-height: 270px;
+  float: left;
+  text-align: center;
+  padding: 0px 10px 10px 0px;
+}
+
+.profile-img img {
+  padding-bottom: 10px;
+}
+
+.profile-label {
+  font-size: 1em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.profile-info {
+  font-size: 1.3em;
+  margin-bottom: 10px;
 }
 
 #panel-campground.form-center {
@@ -168,6 +233,7 @@ textarea.form-control {
   color: #ffffff;
   background-color: #F89406;
   border: none;
+  margin: 0 auto;
 }
 
 .upload-btn:hover,

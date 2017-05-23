@@ -29,12 +29,16 @@
                 </button>
 
                 <a class="navbar-brand" href="/">YelpCamp</span></a>
+                <ul id="ticker">
+                  <li>Discover amazing campgrounds from all over the globe</li>
+                  <li>Sign up and get started!</li>
+                </ul>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
               <ul class="nav navbar-nav navbar-right">
                       <li class="header-icon<%= typeof pageSelect !== 'undefined' && pageSelect === 'campgrounds' ? ' active' : '' %>"><a href="/campgrounds"><i class="glyphicon glyphicon-tent"> </i></a></li>
                   <% if(!currentUser){ %>
-                      <li class="dropdown <%= typeof pageSelect !== 'undefined' && pageSelect === 'login' ? ' active' : '' %>">
+                      <li class="dropdown <%= typeof pageSelect !== 'undefined' && pageSelect === 'login' ? ' active' : '' %><%= typeof pageSelect !== 'undefined' && pageSelect === 'register' ? ' active' : '' %>">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-2x"> </i></a>
 
                         <div class="panel panel-default dropdown-menu">
@@ -56,6 +60,9 @@
                                   <input class="btn btn-lg btn-primary pull-right" type="submit" name="" value="Log In">
                                 </div>
                               </form>
+                            </div>
+                            <div class="forgot-link-parent">
+                              <a href="/forgot" class="forgot-link">Forgot your password?</a>
                             </div>
                           </div>
                         </div>

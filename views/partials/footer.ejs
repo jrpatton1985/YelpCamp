@@ -8,7 +8,7 @@
     <!-- Bootstrap js -->
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-    <% if (typeof pageSelect !== 'undefined' && pageSelect === 'new') { %>
+    <% if (typeof pageSelect !== 'undefined' && (pageSelect === 'new' || pageSelect === 'reset' || pageSelect === 'profile')) { %>
       <script type="text/javascript" src="../js/randombg.js"></script>
     <% } else if (typeof pageSelect !== 'undefined' && pageSelect === 'edit') { %>
       <script type="text/javascript" src="../../js/randombg.js"></script>
@@ -16,16 +16,16 @@
       <script type="text/javascript" src="../../../js/randombg.js"></script>
     <% } else if (typeof pageSelect !== 'undefined' && pageSelect === 'editcomment') { %>
       <script type="text/javascript" src="../../../../js/randombg.js"></script>
-    <% } else if (typeof pageSelect !== 'undefined' && (pageSelect === 'register' || pageSelect === 'login')) { %>
+    <% } else if (typeof pageSelect !== 'undefined' && (pageSelect === 'register' || pageSelect === 'login' || pageSelect === 'forgot')) { %>
       <script type="text/javascript" src="js/randombg.js"></script>
     <% } %>
 
     <% if (typeof pageSelect !== 'undefined' && pageSelect === 'upload') { %>
       <script type="text/javascript" src="js/upload.js"></script>
     <% } %>
-
-    <!-- Scroll Reveal -->
+    
     <script type="text/javascript">
+      // scroll reveal
       sr.reveal('#flash',
         {
           duration: 1000,
@@ -37,6 +37,18 @@
         e.preventDefault();
         $('#flash').hide();
       });
+
+      // nav bar ticker
+      function tickOut(){
+        $('#ticker li:first').animate({'opacity':0}, 1000, function () {
+            //$(this).hide()
+            $(this).appendTo($('#ticker'))
+            $('#ticker li:first').hide()
+            $('#ticker li:first').fadeIn(1000)
+              $('#ticker li:not(:first)').css('opacity', '1')
+        });
+      }
+      setInterval(function(){ tickOut () }, 5500);
     </script>
 
   </body>
