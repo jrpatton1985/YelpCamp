@@ -26,7 +26,7 @@ var commentRoutes    = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes      = require("./routes/index"),
     ratingRoutes     = require("./routes/ratings");
-    uploadRoutes     = require("./routes/uploads");
+    // uploadRoutes     = require("./routes/uploads");
 
 // ============== Configuration ===============
 // favicon
@@ -117,7 +117,7 @@ app.use(indexRoutes);
 app.use("/campgrounds/", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/campgrounds/:id/ratings", ratingRoutes);
-app.use("/uploads/", uploadRoutes);
+// app.use("/uploads/", uploadRoutes);
 // ============================================
 
 // ================= Listener =================
