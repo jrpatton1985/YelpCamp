@@ -48,7 +48,7 @@ router.post("/register",
 
         req.logIn(newUser, function(err) {
           if (err) console.log(err);
-          req.flash("success", "Welcome to YelpCamp " + user.username + "!");
+          req.flash("success", "Welcome to YelpCamp " + newUser.username + "!");
           res.redirect("/campgrounds");
         });
     });
