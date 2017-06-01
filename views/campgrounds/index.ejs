@@ -13,10 +13,14 @@
     </div>
   </div>
 
+  <div class="follow-scroll">
+    <a href="#top"><i class="fa fa-arrow-circle-o-up fa-3x" aria-hidden="true"></i></a>
+  </div>
+
   <div class="container">
     <div class="row text-center flex">
       <div class="col-md-8">
-        <div class="col-md-12 cg-list-bg soft-rounded">
+        <div class="col-md-12">
 
           <div class="form-center">
             <form class="" action="/campgrounds" method="GET">
@@ -27,63 +31,68 @@
             </form>
           </div>
 
-          <% campgrounds.forEach(function(campground) { %>
-            <div class="new-thumbnail rounded">
-                <img class="img-responsive img-rounded" src="<%=campground.image %>" alt="<%=campground.name %>">
-                <div class="caption">
+          <div class="cg-list-bg soft-rounded" id="campground-grid">
+            <% campgrounds.forEach(function(campground) { %>
+              <div class="new-thumbnail rounded">
+                <div class="caption-top">
                   <h4><%=campground.name %> <span class="rating-star"><strong> <%= campground.rating.toFixed(1) %></strong></span></h4>
+                </div>
+
+                <img class="img-responsive" src="<%=campground.image %>" alt="<%=campground.name %>">
+                <div class="caption">
                   <p><%=campground.description.substring(0, 150) %>...
                     <a href="/campgrounds/<%=campground._id %>" class="btn btn-info btn-xs pull-right"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;&nbsp;More Info</a>
                   </p>
                 </div>
-            </div>
-            <hr>
-          <% }); %>
-
-          <!-- Pagination -->
-          <!-- Provided by Roman Tuomisto -->
-          <!-- https://www.udemy.com/the-web-developer-bootcamp/learn/v4/questions/1646592 -->
-          <div class="row">
-            <nav>
-              <div class="">
-                <ul class="pagination pagination-lg">
-
-                  <% if (output.pages.current > 1 && output.pages.hasPrev === true) { %>
-                    <li>
-                      <a href="/campgrounds/page/<%=output.pages.prev %>" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                      </a>
-                    </li>
-                  <% } else { %>
-                    <li>
-                      <a class="btn btn-xs disabled" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                      </a>
-                    </li>
-                  <% } %>
-
-                  <% for (var i = 1; i < output.pages.total + 1; i++) { %>
-                    <li><a href="/campgrounds/page/<%=i %>"><%=i %></a></li>
-                  <% } %>
-
-                  <% if (output.pages.current < output.pages.total && output.pages.hasNext === true) { %>
-                    <li>
-                      <a href="/campgrounds/page/<%=output.pages.next %>" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                      </a>
-                    </li>
-                  <% } else { %>
-                    <li>
-                      <a class="btn btn-xs disabled" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                      </a>
-                    </li>
-                  <% } %>
-                </ul>
               </div>
-            </nav>
+              <hr>
+            <% }); %>
+
+            <!-- Pagination -->
+            <!-- Provided by Roman Tuomisto -->
+            <!-- https://www.udemy.com/the-web-developer-bootcamp/learn/v4/questions/1646592 -->
+            <div class="row">
+              <nav>
+                <div class="">
+                  <ul class="pagination pagination-lg">
+
+                    <% if (output.pages.current > 1 && output.pages.hasPrev === true) { %>
+                      <li>
+                        <a href="/campgrounds/page/<%=output.pages.prev %>" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                    <% } else { %>
+                      <li>
+                        <a class="btn btn-xs disabled" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                    <% } %>
+
+                    <% for (var i = 1; i < output.pages.total + 1; i++) { %>
+                      <li><a href="/campgrounds/page/<%=i %>"><%=i %></a></li>
+                    <% } %>
+
+                    <% if (output.pages.current < output.pages.total && output.pages.hasNext === true) { %>
+                      <li>
+                        <a href="/campgrounds/page/<%=output.pages.next %>" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                    <% } else { %>
+                      <li>
+                        <a class="btn btn-xs disabled" href="#" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                    <% } %>
+                  </ul>
+                </div>
+              </nav>
+            </div>
+            <!-- End Pagination -->
           </div>
-          <!-- End Pagination -->
 
         </div>
       </div>
@@ -96,20 +105,53 @@
     </div>
   </div>
 
-  <!-- jQuery -->
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script type="text/javascript">
-    var bgImgs = [
-      'http://i.imgur.com/K3mPv14.jpg',
-      'http://i.imgur.com/SBEmFpv.jpg',
-      'http://i.imgur.com/emvhOnb.jpg',
-      'http://i.imgur.com/2LSMCmJ.jpg',
-      'http://i.imgur.com/TVGe0Ef.jpg'
-    ];
+<% include ../partials/footer %>
+<% include ../partials/footer-java %>
 
-    $('.bgRandom').css({
-      'background-image': 'url(' + bgImgs[Math.floor(Math.random() * bgImgs.length)] + ')'
+  <script type="text/javascript">
+    sr.reveal('#campground-grid', {
+      duration: 1000,
+      origin: 'bottom',
+      distance: '25px',
+      viewFactor: 0.1
     });
   </script>
+  <script type="text/javascript">
+    (function($) {
+        var element = $('.follow-scroll'),
+            originalY = element.offset().top;
 
-<% include ../partials/footer %>
+        // Space between element and top of screen (when scrolling)
+        var topMargin = 75;
+        var height = document.documentElement.clientHeight;
+        // Should probably be set in CSS; but here just for emphasis
+        element.css('top', (height - originalY - topMargin));
+        element.hide();
+
+        $(window).on('scroll', function(event) {
+            var scrollTop = $(window).scrollTop();
+
+            if (scrollTop > 0) {
+              element.show();
+            } else if (scrollTop <= 0) {
+              element.hide();
+            }
+
+            element.stop(false, false).animate({
+            top: scrollTop < originalY
+                    ? height - originalY - topMargin
+                    : scrollTop - originalY + height - topMargin
+            }, 300);
+        });
+
+        $('.follow-scroll a').bind('click', function(event) {
+          var $anchor = $(this);
+          $('html, body').stop().animate({
+            scrollTop: ($($anchor.attr('href')).offset().top - 50)
+          }, 1250, 'easeInOutExpo');
+          event.preventDefault();
+        });
+    })(jQuery);
+  </script>
+
+<% include ../partials/bottom %>
