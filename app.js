@@ -65,7 +65,7 @@ app.locals.moment = require('moment');
 app.use(cookieParser());
 app.use(require("express-session")({
     secret: "Stewie is the most awesome cat ever!",
-    //cookie: {maxAge: 60 * 60 * 1000},    // 1 hour
+    cookie: {maxAge: 60 * 60 * 1000 * 24 },    // 1 Day
     resave: false,
     saveUninitialized: false,
     //store: new MongoStore({ url:process.env.DATABASEURL, autoReconnect: true })
@@ -105,7 +105,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get("/*", function(req, res, next) {
+app.get("*", function(req, res, next) {
     if (typeof req.cookies['connect.cid'] !== 'undefined') {
         console.log(req.cookies['connect.cid']);
     }

@@ -37,6 +37,9 @@ router.post("/register",
           email: req.body.email,
           password: req.body.password
         });
+
+    if (req.body.adminCode === 'secretAdminCode123') newUser.isAdmin = true;
+
     newUser.save(function (err) {
         if (err) {
           console.log(err);
@@ -119,7 +122,39 @@ router.get("/profile", middleware.isLoggedIn, function(req, res) {
     res.render("profile/", {pageSelect: 'profile'});
 });
 
+router.post("/profile/password",
+            middleware.isLoggedIn,
+            middleware.changePasswordValidation, function(req, res, next) {
 
+    // find and compare current password
+    User.findById(req.body._id, function(err, user) {
+        if (err) {
+          req.flash("error", err.message);
+          return res.redirect('/login');
+        }
+
+        if (!user) {
+          req.flash("error", 'No user found.');
+          return res.redirect('/login');
+        }
+
+        user.comparePassword(req.body.passwordOld, function(err, isMatch) {
+          if (isMatch) {
+            // old passwords match, update to new password
+            user.password = req.body.password;
+            user.save(function(err) {
+                req.logout();
+                req.flash('success', 'Success! Your password has been changed. Please log back in.');
+                res.redirect('/login');
+            });
+          } else {
+            req.flash("error", 'Old Password is incorrect.');
+            return res.redirect('/profile');
+          }
+        });
+    });
+
+});
 // ============================================
 
 // -- Forgot Password
@@ -206,9 +241,10 @@ router.post('/reset/:token', middleware.changePasswordValidation, function(req, 
           user.resetPasswordExpires = undefined;
 
           user.save(function(err) {
-            req.logIn(user, function(err) {
-              done(err, user);
-            });
+            // req.logIn(user, function(err) {
+            //   done(err, user);
+            // });
+            done(err, user);
           });
         });
       },
@@ -223,12 +259,12 @@ router.post('/reset/:token', middleware.changePasswordValidation, function(req, 
         };
         mailer.sendMail(mailOptions, function(err) {
             if (err) return done(err);
-            req.flash('success', 'Success! Your password has been changed.');
+            req.flash('success', 'Success! Your password has been changed. Please log back in.');
             done(err, 'done');
         });
       }
     ], function(err) {
-        res.redirect('/campgrounds');
+        res.redirect('/login');
     });
 
 });

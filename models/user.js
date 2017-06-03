@@ -9,7 +9,8 @@ var UserSchema = new mongoose.Schema({
     password: {type: String, required: true},
     image: String,
     resetPasswordToken: String,
-    resetPasswordExpires: Date
+    resetPasswordExpires: Date,
+    isAdmin: {type: Boolean, default: false}
 });
 
 UserSchema.pre('save', function(next) {

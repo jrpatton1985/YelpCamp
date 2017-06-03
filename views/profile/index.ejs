@@ -6,14 +6,14 @@
       <div class="col-md-10 col-sm-10 col-md-offset-1 col-sm-offset-1">
         <div class="panel panel-default panel-profile">
           <div class="panel-body">
-            <div class="container">
+            <div class="container" style="width: 100%;">
               <div class="row">
                 <p class="profile-heading">My Account</p>
               </div>
 
               <div class="row">
 
-                <div class="col-md-3 col-sm-7">
+                <div class="col-md-5 col-sm-12">
                   <div class="profile-img">
                     <img src="https://s3.us-east-2.amazonaws.com/pattonjim-yelpcamp/uploads/no-profile.png" alt="">
                     <br>
@@ -21,7 +21,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-4 col-sm-7">
+                <div class="col-md-7 col-sm-12">
                   <div class="profile-label">Username</div>
                   <div class="profile-info">
                     <%=currentUser.username %>
@@ -33,16 +33,20 @@
 
                   <hr>
 
-                  <div class="form-group">
-                    <input class="form-control" type="password" name="passwordOld" value="" placeholder="old password">
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" type="password" name="password" value="" placeholder="new password">
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" type="password" name="password2" value="" placeholder=" confirm password">
-                  </div>
-                  <button class="btn btn-info btn-sm pull-right" type="button">Save Changes</button>
+                  <form action="/profile/password" method="POST">
+                    <input type="hidden" name="_id" value="<%=currentUser._id%>">
+                    <div class="form-group">
+                      <input class="form-control" type="password" name="passwordOld" value="" placeholder="old password">
+                    </div>
+                    <div class="form-group">
+                      <input class="form-control" type="password" name="password" value="" placeholder="new password">
+                    </div>
+                    <div class="form-group">
+                      <input class="form-control" type="password" name="password2" value="" placeholder=" confirm password">
+                    </div>
+                    <button class="btn btn-info btn-sm pull-right" type="submit">Save Changes</button>
+                  </form>
+
                 </div>
 
               </div>

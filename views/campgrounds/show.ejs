@@ -22,7 +22,7 @@
       <div class="col-md-9">
         <div class="thumbnail">
           <img class="img-responsive img-rounded" id="thumbnail-show" src="<%=campground.image %>" alt="<%=campground.name %>">
-          <div class="caption-full">
+          <div class="caption-full box-shadow">
             <h4 class="pull-right">
               <% if (campground.price) { %>
                 $<%=campground.price %>/night
@@ -74,7 +74,7 @@
 
             <p><em>Campground by: <%=campground.author.username %>, <%= moment(campground.createdAt).fromNow() %></em></p>
 
-            <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
+            <% if(currentUser && campground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
               <hr>
               <a class="btn btn-warning" href="/campgrounds/<%=campground._id%>/edit">Edit</a>
               <form id="delete-form" action="/campgrounds/<%=campground._id %>?_method=DELETE" method="post">
@@ -85,7 +85,7 @@
           </div>
         </div>
 
-        <div class="well">
+        <div class="well box-shadow">
           <i class="fa fa-comments-o comments-icon"></i>
           <div class="text-right">
             <a class="btn btn-success" href="/campgrounds/<%=campground._id %>/comments/new">Add New Comment</a>
@@ -98,7 +98,7 @@
                 <span class="pull-right"><%=moment(comment.createdAt).fromNow() %></span>
                 <p><%=comment.text %></p>
 
-                <% if (currentUser && comment.author.id.equals(currentUser._id)) { %>
+                <% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
                   <a class="btn btn-xs btn-warning" href="/campgrounds/<%=campground._id%>/comments/<%=comment._id %>/edit">Edit</a>
                   <form id="delete-form" action="/campgrounds/<%=campground._id %>/comments/<%=comment._id %>?_method=DELETE" method="post">
                     <input class="btn btn-xs btn-danger" type="submit" name="" value="Delete">
