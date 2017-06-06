@@ -49,7 +49,7 @@ $(document).ready(function() {
           success: function(data) {
               console.log('upload successful!\n' + data);
               // set the new avatar image source
-              //$('#avatar').attr('src', data);
+              $('#avatar').attr('src', data);
               // close the modal
               //$('#uploadModal').modal('hide');
           },
@@ -75,9 +75,6 @@ $(document).ready(function() {
                   // text to done
                   if (percentComplete === 100) {
                     $('.progress-bar').html('Done');
-
-                    // set the new avatar image source
-                    $('#avatar').attr('src', data);
                     // close the modal
                     $('#uploadModal').modal('hide');
                   }

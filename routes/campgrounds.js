@@ -93,19 +93,11 @@ function paginate(req, res, next) {
                         output.items.end = output.items.total;
                       }
 
-                      // retrieve the campground owner's image
-                      allCampgrounds.forEach(function(campground) {
-                          User.findById(campground.author.id, function(err, foundUser) {
-                              campground.author.image = foundUser.image;
-
-                              res.render("campgrounds/index", {
-                                  campgrounds: allCampgrounds,
-                                  output: output,
-                                  pageSelect: 'campgrounds'
-                              });
-                          });
+                      res.render("campgrounds/index", {
+                          campgrounds: allCampgrounds,
+                          output: output,
+                          pageSelect: 'campgrounds'
                       });
-
               });
     });
 }
