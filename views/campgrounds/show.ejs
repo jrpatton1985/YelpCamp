@@ -72,7 +72,15 @@
               <% } %>
             <% } %>
 
-            <p><em>Campground by: <%=campground.author.username %>, <%= moment(campground.createdAt).fromNow() %></em></p>
+            <p><em>Campground by:
+              <% if (cgOwner.image !== undefined) { %>
+                  <img class="img-circle user-img" src="<%=cgOwner.image %>" alt="">
+              <% } else { %>
+                  <img class="img-circle user-img" src="https://s3.us-east-2.amazonaws.com/pattonjim-yelpcamp/uploads/no-profile.png" alt="">
+              <% }%>
+
+              <%=campground.author.username %>, <%= moment(campground.createdAt).fromNow() %>
+            </em></p>
 
             <% if(currentUser && campground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
               <hr>

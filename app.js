@@ -26,7 +26,7 @@ var commentRoutes    = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes      = require("./routes/index"),
     ratingRoutes     = require("./routes/ratings");
-    // uploadRoutes     = require("./routes/uploads");
+    uploadRoutes     = require("./routes/uploads");
 
 // ============== Configuration ===============
 // favicon
@@ -53,8 +53,12 @@ mongoose.connection.on('error', function(err) {
 // view engine setup
 app.set("view engine", "ejs");
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({
+        extended: true,
+        limit: '50mb',
+        parameterLimit: 1000000
+      }));
 app.use(expValidator());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
@@ -105,7 +109,15 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get("*", function(req, res, next) {
+// Multer Errors
+app.use(function(err, res, res, next) {
+    if (err.code === 'LIMIT_FILE_SIZE') {
+      res.send({ result: 'fail', error: { code: 1001, message: 'File is too big' } })
+      return
+    }
+})
+
+app.get("/*", function(req, res, next) {
     if (typeof req.cookies['connect.cid'] !== 'undefined') {
         console.log(req.cookies['connect.cid']);
     }
@@ -117,7 +129,7 @@ app.use(indexRoutes);
 app.use("/campgrounds/", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/campgrounds/:id/ratings", ratingRoutes);
-// app.use("/uploads/", uploadRoutes);
+app.use("/profile/uploads/", uploadRoutes);
 // ============================================
 
 // ================= Listener =================

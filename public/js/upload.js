@@ -1,10 +1,26 @@
-$('.upload-btn').on('click', function (){
-    $('#upload-input').click();
-    $('.progress-bar').text('0%');
-    $('.progress-bar').width('0%');
-});
+$(document).ready(function() {
+  $(document).on('click', '#upModal', function(e) {
+    e.preventDefault();
+    var url = window.location.href + "/uploads";
+    //alert(url);
+    $.ajax({
+      type: 'GET',
+      url: url,
+      success: function(res) {
+        $('#uploadModal').html(res);
+        $('#uploadModal').modal('show');
+      }
+    });
+  });
 
-$('#upload-input').on('change', function() {
+  $(document).on('click', '#upBtn', function(e) {
+      e.preventDefault();
+      $('#upload-input').click();
+      $('.progress-bar').text('0%');
+      $('.progress-bar').width('0%');
+  });
+
+  $(document).on('change', '#upload-input', function(e) {
     var files = $(this).get(0).files;
 
     if (files.length > 0) {
@@ -19,17 +35,23 @@ $('#upload-input').on('change', function() {
           var file = files[i];
 
           // add the files to formData object for the data payload
-          formData.append('uploads[]', file, file.name);
+          formData.append('uploads', file, file.name);
         }
 
+        var url = window.location.href + '/uploads';
+
         $.ajax({
-          url: '/uploads',
+          url: url,
           type: 'POST',
           data: formData,
           processData: false,
           contentType: false,
           success: function(data) {
               console.log('upload successful!\n' + data);
+              // set the new avatar image source
+              //$('#avatar').attr('src', data);
+              // close the modal
+              //$('#uploadModal').modal('hide');
           },
 
           xhr: function() {
@@ -53,6 +75,11 @@ $('#upload-input').on('change', function() {
                   // text to done
                   if (percentComplete === 100) {
                     $('.progress-bar').html('Done');
+
+                    // set the new avatar image source
+                    $('#avatar').attr('src', data);
+                    // close the modal
+                    $('#uploadModal').modal('hide');
                   }
                 }
 
@@ -62,4 +89,5 @@ $('#upload-input').on('change', function() {
           }
         });
     }
+  });
 });

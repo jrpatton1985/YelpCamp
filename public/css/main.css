@@ -50,7 +50,7 @@ li.dropdown:hover > .dropdown-menu {
 @media (max-width: 991px) and
        (min-width: 768px) {
   .container-top {
-    padding-right: 64px;
+    padding-right: 34px;
   }
 }
 
@@ -223,6 +223,19 @@ ul.dropdown-menu .divider {
   font-size: 1.3em;
   margin-bottom: 10px;
 }
+
+.user-img {
+  width: 50px !important;
+  height: 50px !important;
+  border: 3px solid darkgray;
+  border-style: double;
+}
+
+.cornerimage {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+ }
 
 #panel-campground.form-center {
   width: 90%;
@@ -449,6 +462,11 @@ textarea.form-control {
 .pagination li {
   margin: 0 auto;
 }
+
+.img-container {
+  border: 0;
+  position: relative;
+}
 /* ---- Campgrounds Page ---- */
 
 /* ---- Campground Show Page ---- */
@@ -556,4 +574,44 @@ html {
   z-index: 2;
   transition: all 0.2s ease;
   box-sizing: content-box;
+}
+
+/* ------ Modal ------ */
+.upload-modal .modal-content {
+  width: 95%;
+  margin: 0 auto;
+  min-height: 85%;
+  padding: 100px 0;
+  text-align: center;
+}
+
+.upload-modal .close-modal {
+  position: absolute;
+  width: 75px;
+  height: 75px;
+  background-color: transparent;
+  top: 25px;
+  right: 25px;
+  cursor: pointer;
+}
+
+.upload-modal .close-modal .lr {
+  height: 75px;
+  width: 1px;
+  margin-left: 35px;
+  background-color: #2C3E50;
+  transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  z-index: 1051;
+}
+
+.upload-modal .close-modal .lr .rl {
+  height: 75px;
+  width: 1px;
+  background-color: #2C3E50;
+  transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  z-index: 1052;
 }

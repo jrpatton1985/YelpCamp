@@ -8,6 +8,7 @@ var express    = require("express"),
     url        = require("url"),
     Campground = require("../models/campground"),
     Comment    = require("../models/comment"),
+    User       = require("../models/user"),
     middleware = require("../middleware");
 
 function sanitizeCampground(req, res) {
@@ -92,12 +93,19 @@ function paginate(req, res, next) {
                         output.items.end = output.items.total;
                       }
 
-                      //console.log(output);
-                      res.render("campgrounds/index", {
-                          campgrounds: allCampgrounds,
-                          output: output,
-                          pageSelect: 'campgrounds'
+                      // retrieve the campground owner's image
+                      allCampgrounds.forEach(function(campground) {
+                          User.findById(campground.author.id, function(err, foundUser) {
+                              campground.author.image = foundUser.image;
+
+                              res.render("campgrounds/index", {
+                                  campgrounds: allCampgrounds,
+                                  output: output,
+                                  pageSelect: 'campgrounds'
+                              });
+                          });
                       });
+
               });
     });
 }
@@ -215,11 +223,21 @@ router.get("/:id", function(req, res) {
               foundCampground.save();
           }
 
-          // console.log("Ratings: ", foundCampground.ratings);
-          // console.log("Campground Rating: ", foundCampground.rating);
-          // console.log("Campground: ", foundCampground);
-          // render show template with that information
-          res.render("campgrounds/show", {campground: foundCampground});
+          User.findById(foundCampground.author.id, function(err, foundUser) {
+              if (err) {
+                  console.log(err);
+                  return res.send(err);
+              }
+
+              // console.log("Ratings: ", foundCampground.ratings);
+              // console.log("Campground Rating: ", foundCampground.rating);
+              // console.log("Campground: ", foundCampground);
+              // render show template with that information
+              res.render("campgrounds/show", {
+                          campground: foundCampground,
+                          cgOwner: foundUser
+                        });
+          });
         }
     });
 });
@@ -256,7 +274,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
                 // S3 object?
                 var image = req.file.location;
             } else {
-                var image = '/uploads/no-image.jpg';
+                var image = 'https://s3.us-east-2.amazonaws.com/pattonjim-yelpcamp/uploads/no-image.jpg';
             }
 
             var description = req.body.description;
@@ -326,19 +344,21 @@ router.put("/:id", middleware.checkCampgroundOwnership, function(req, res) {
             res.redirect('back');
         } else {
             if (req.body.removeImage) {
-                req.body.image = '/uploads/no-image.jpg';
+                req.body.image = 'https://s3.us-east-2.amazonaws.com/pattonjim-yelpcamp/uploads/no-image.jpg';
             } else if (req.file) {
                 //req.body.image = '/uploads/' + req.file.filename;
 
                 // delete old file
                 var oldKey = url.parse(req.body.origImage).pathname.substr(1);
-                var params = {
-                    Bucket: process.env.S3_BUCKET,
-                    Key: oldKey
-                };
-                s3.deleteObject(params, function(err, data) {
-                    if (err) console.log(err, err.stack);
-                });
+                if (oldKey != 'uploads/no-image.jpg') {
+                  var params = {
+                      Bucket: process.env.S3_BUCKET,
+                      Key: oldKey
+                  };
+                  s3.deleteObject(params, function(err, data) {
+                      if (err) console.log(err, err.stack);
+                  });
+                }
 
                 // set new file location
                 req.body.image = req.file.location;
@@ -385,13 +405,16 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res) {
 
         // delete image file
         var oldKey = url.parse(foundCampground.image).pathname.substr(1);
-        var params = {
-            Bucket: process.env.S3_BUCKET,
-            Key: oldKey
-        };
-        s3.deleteObject(params, function(err, data) {
-            if (err) console.log(err, err.stack);
-        });
+
+        if (oldKey != 'uploads/no-image.jpg') {
+          var params = {
+              Bucket: process.env.S3_BUCKET,
+              Key: oldKey
+          };
+          s3.deleteObject(params, function(err, data) {
+              if (err) console.log(err, err.stack);
+          });
+        }
 
         Comment.remove({"_id": {"$in": foundCampground.comments}}, function(err) {
             if (err) {

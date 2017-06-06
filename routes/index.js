@@ -119,6 +119,7 @@ router.get("/logout", function(req, res) {
 
 // -- User Profile
 router.get("/profile", middleware.isLoggedIn, function(req, res) {
+    //console.log(req.user);
     res.render("profile/", {pageSelect: 'profile'});
 });
 
