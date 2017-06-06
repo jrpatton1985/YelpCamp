@@ -1,28 +1,43 @@
 <% include ../partials/header %>
 
-  <div class="bgRandom bgBlur"></div>
+  <div class="follow-scroll">
+    <a href="#top"><i class="fa fa-arrow-circle-o-up fa-3x" aria-hidden="true"></i></a>
+  </div>
+
   <div class="container">
     <div class="row text-center flex">
       <div class="col-md-10 col-md-offset-1">
-        <div class="col-md-12 cg-list-bg soft-rounded">
+        <div class="col-md-12">
 
           <div class="search-results" id="search-top">
             <h3>Search Results</h3>
             <hr>
           </div>
 
-          <% campgrounds.forEach(function(campground) { %>
-            <div class="new-thumbnail rounded">
-                <img class="img-responsive img-rounded" src="<%=campground.image %>" alt="<%=campground.name %>">
-                <div class="caption">
+          <div class="soft-rounded" id="campground-grid">
+            <% campgrounds.forEach(function(campground) { %>
+              <div class="new-thumbnail rounded box-shadow">
+                <div class="caption-top">
                   <h4><%=campground.name %> <span class="rating-star"><strong> <%= campground.rating.toFixed(1) %></strong></span></h4>
-                  <p><%=campground.description.substring(0, 150) %>...
+                </div>
+
+                <div class="img-container">
+                  <img class="img-responsive" src="<%=campground.image %>" alt="<%=campground.name %>">
+                  <!-- <% if (campground.author.image !== undefined) { %>
+                    <img class="img-circle user-img cornerimage" src="<%=campground.author.image %>" alt="<%=campground.author.username %>">
+                  <% } else { %>
+                    <img class="img-circle user-img cornerimage" src="https://s3.us-east-2.amazonaws.com/pattonjim-yelpcamp/uploads/no-profile.png" alt="<%=campground.author.username %>">
+                  <% } %> -->
+                </div>
+
+                <div class="caption">
+                  <p><%=campground.description.substring(0, 250) %>...
                     <a href="/campgrounds/<%=campground._id %>" class="btn btn-info btn-xs pull-right"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;&nbsp;More Info</a>
                   </p>
                 </div>
-            </div>
-            <hr>
-          <% }); %>
+              </div>
+            <% }); %>
+          </div>
 
           <a href="#top" class="btn btn-primary btn-sm" style="margin-bottom: 10px;">Back to top</a>
         </div>
@@ -30,22 +45,7 @@
     </div>
   </div>
 
-  <!-- jQuery -->
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script type="text/javascript">
-    var bgImgs = [
-      'http://i.imgur.com/K3mPv14.jpg',
-      'http://i.imgur.com/SBEmFpv.jpg',
-      'http://i.imgur.com/emvhOnb.jpg',
-      'http://i.imgur.com/2LSMCmJ.jpg',
-      'http://i.imgur.com/TVGe0Ef.jpg'
-    ];
-
-    $('.bgRandom').css({
-      'background-image': 'url(' + bgImgs[Math.floor(Math.random() * bgImgs.length)] + ')'
-    });
-  </script>
-
 <% include ../partials/footer %>
 <% include ../partials/footer-java %>
+<script type="text/javascript" src="/js/main.js"></script>
 <% include ../partials/bottom %>

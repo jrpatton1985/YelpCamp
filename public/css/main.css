@@ -310,9 +310,8 @@ textarea.form-control {
 }
 
 .search-results {
-  color: white;
+  color: #777;
   text-align: left;
-  text-shadow: 1px 1px black;
 }
 .search-results h3 {
   margin-top: 0px;
