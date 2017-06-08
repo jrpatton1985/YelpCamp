@@ -73,8 +73,8 @@
             <% } %>
 
             <p><em>Campground by:
-              <% if (cgOwner.image !== undefined) { %>
-                  <img class="img-circle user-img" src="<%=cgOwner.image %>" alt="">
+              <% if (campground.author.id.image !== undefined) { %>
+                  <img class="img-circle user-img" src="<%=campground.author.id.image %>" alt="">
               <% } else { %>
                   <img class="img-circle user-img" src="https://s3.us-east-2.amazonaws.com/pattonjim-yelpcamp/uploads/no-profile.png" alt="">
               <% }%>
@@ -102,17 +102,25 @@
           <% campground.comments.forEach(function(comment) { %>
             <div class="row">
               <div class="col-md-12 comments">
+                <% if (comment.author.id.image !== undefined) { %>
+                    <img class="img-circle user-img" src="<%=comment.author.id.image %>" alt="">
+                <% } else { %>
+                    <img class="img-circle user-img" src="https://s3.us-east-2.amazonaws.com/pattonjim-yelpcamp/uploads/no-profile.png" alt="">
+                <% }%>
                 <strong><%=comment.author.username %></strong>
                 <span class="pull-right"><%=moment(comment.createdAt).fromNow() %></span>
-                <p><%=comment.text %></p>
+                <div class="comment">
 
-                <% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
-                  <a class="btn btn-xs btn-warning" href="/campgrounds/<%=campground._id%>/comments/<%=comment._id %>/edit">Edit</a>
-                  <form id="delete-form" action="/campgrounds/<%=campground._id %>/comments/<%=comment._id %>?_method=DELETE" method="post">
-                    <input class="btn btn-xs btn-danger" type="submit" name="" value="Delete">
-                  </form>
-                <% } %>
+                  <p><%=comment.text %></p>
 
+                  <% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
+                    <a class="btn btn-xs btn-warning" href="/campgrounds/<%=campground._id%>/comments/<%=comment._id %>/edit">Edit</a>
+                    <form id="delete-form" action="/campgrounds/<%=campground._id %>/comments/<%=comment._id %>?_method=DELETE" method="post">
+                      <input class="btn btn-xs btn-danger" type="submit" name="" value="Delete">
+                    </form>
+                  <% } %>
+
+                </div>
               </div>
             </div>
           <% }); %>

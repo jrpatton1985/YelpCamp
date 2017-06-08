@@ -72,6 +72,7 @@ function paginate(req, res, next) {
     Campground.find({})
               .skip((page - 1) * perPage)
               .limit(perPage)
+              .populate('author.id', ['image'])
               .exec(function(err, allCampgrounds) {
                   if (err) return next(err.message);
 
@@ -195,7 +196,20 @@ router.get("/new", middleware.isLoggedIn, function(req, res) {
 // -- Show Route
 router.get("/:id", function(req, res) {
     // find campground by id
-    Campground.findById(req.params.id).populate("comments").populate("ratings").exec(function(err, foundCampground) {
+    Campground.findById(req.params.id)
+              .populate({
+                  path: "comments",
+                  model: 'Comment',
+                  populate: {
+                      // select only the authors image field
+                      path: 'author.id',
+                      model: 'User',
+                      select: 'image -_id'
+                  }
+                })
+              .populate("ratings")
+              .populate("author.id", ['_id','username','image'])
+              .exec(function(err, foundCampground) {
         if (err) {
           console.log(err);
           req.flash("error", err.message);
@@ -215,20 +229,9 @@ router.get("/:id", function(req, res) {
               foundCampground.save();
           }
 
-          User.findById(foundCampground.author.id, function(err, foundUser) {
-              if (err) {
-                  console.log(err);
-                  return res.send(err);
-              }
-
-              // console.log("Ratings: ", foundCampground.ratings);
-              // console.log("Campground Rating: ", foundCampground.rating);
-              // console.log("Campground: ", foundCampground);
-              // render show template with that information
-              res.render("campgrounds/show", {
-                          campground: foundCampground,
-                          cgOwner: foundUser
-                        });
+          // render show template with that information
+          res.render("campgrounds/show", {
+                      campground: foundCampground
           });
         }
     });
@@ -318,7 +321,7 @@ router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res) 
 router.put("/:id", middleware.checkCampgroundOwnership, function(req, res) {
 
     upload(req, res, function(err) {
-        console.log(req.file);
+        //console.log(req.file);
         if (err) {
           return res.send("An error occurred when uploading file.");
         }
