@@ -5,35 +5,3 @@
     <!-- Plugin Javascript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script type="text/javascript" src="/js/randombg.js"></script>
-
-    <script type="text/javascript">
-      // scroll reveal
-      sr.reveal('#flash',
-        {
-          duration: 1000,
-          origin: 'top',
-          distance: '50px'
-        });
-
-      $(document).on("click", '.close', function(e) {
-        e.preventDefault();
-        $('#flash').hide();
-      });
-
-      // nav bar ticker
-      function tickOut(){
-        $('#ticker li:first').animate({'opacity':0}, 1000, function () {
-            //$(this).hide()
-            $(this).appendTo($('#ticker'))
-            $('#ticker li:first').hide()
-            $('#ticker li:first').fadeIn(1000)
-              $('#ticker li:not(:first)').css('opacity', '1')
-        });
-      }
-      setInterval(function(){ tickOut () }, 5500);
-
-      // tool tip
-      $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-      })
-    </script>
