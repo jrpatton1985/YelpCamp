@@ -8,6 +8,7 @@ var express    = require("express"),
     url        = require("url"),
     Campground = require("../models/campground"),
     Comment    = require("../models/comment"),
+    Rating     = require("../models/rating"),
     User       = require("../models/user"),
     middleware = require("../middleware");
 
@@ -38,6 +39,20 @@ function getCampgroundImage(req, res) {
           return foundCampground.image;
         }
     });
+}
+
+function deleteCampgroundImage(req, res) {
+    // delete old file
+    var oldKey = url.parse(req.body.origImage).pathname.substr(1);
+    if (oldKey != 'uploads/no-image.jpg') {
+      var params = {
+          Bucket: process.env.S3_BUCKET,
+          Key: oldKey
+      };
+      s3.deleteObject(params, function(err, data) {
+          if (err) console.log(err, err.stack);
+      });
+    }
 }
 
 // Define escapeRegex function for search feature
@@ -262,11 +277,8 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
             var name = req.body.name;
             var price = req.body.price;
 
-            //var image = req.body.image;
             if (req.file) {
-                //console.log(req.file);
-                //var image = '/uploads/' + req.file.filename;
-                // S3 object?
+                // save image location
                 var image = req.file.location;
             } else {
                 var image = 'https://s3.us-east-2.amazonaws.com/pattonjim-yelpcamp/uploads/no-image.jpg';
@@ -312,8 +324,6 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
 router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res) {
     // Find and pass the campground to be editted
     Campground.findById(req.params.id, function(err, foundCampground) {
-        // parse campground image path
-        // var imgFile = path.parse(foundCampground.image).base;
         res.render("campgrounds/edit", {campground: foundCampground, pageSelect: 'edit'});
     });
 });
@@ -339,22 +349,13 @@ router.put("/:id", middleware.checkCampgroundOwnership, function(req, res) {
             res.redirect('back');
         } else {
             if (req.body.removeImage) {
+                // delete previous campground image
+                deleteCampgroundImage(req, res);
+                // set default campground image
                 req.body.image = 'https://s3.us-east-2.amazonaws.com/pattonjim-yelpcamp/uploads/no-image.jpg';
             } else if (req.file) {
-                //req.body.image = '/uploads/' + req.file.filename;
-
-                // delete old file
-                var oldKey = url.parse(req.body.origImage).pathname.substr(1);
-                if (oldKey != 'uploads/no-image.jpg') {
-                  var params = {
-                      Bucket: process.env.S3_BUCKET,
-                      Key: oldKey
-                  };
-                  s3.deleteObject(params, function(err, data) {
-                      if (err) console.log(err, err.stack);
-                  });
-                }
-
+                // delete previous campground image
+                deleteCampgroundImage(req, res);
                 // set new file location
                 req.body.image = req.file.location;
             } else {
@@ -397,10 +398,8 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res) {
       if (err) {
           res.redirect("/campgrounds");
       } else {
-
-        // delete image file
+        // delete old file
         var oldKey = url.parse(foundCampground.image).pathname.substr(1);
-
         if (oldKey != 'uploads/no-image.jpg') {
           var params = {
               Bucket: process.env.S3_BUCKET,
@@ -411,19 +410,30 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res) {
           });
         }
 
+        // remove comments
         Comment.remove({"_id": {"$in": foundCampground.comments}}, function(err) {
             if (err) {
-                res.redirect("/campgrounds");
+              console.log(err);
+              res.redirect("/campgrounds");
             } else {
-                foundCampground.remove(function(err) {
-                    if (err) {
-                        req.flash("error", err.message);
-                        res.redirect("/campgrounds");
-                    } else {
-                        req.flash("success", "Campground successfully deleted.");
-                        res.redirect("/campgrounds");
-                    }
-                });
+              // remove ratings
+              Rating.remove({"_id": {"$in": foundCampground.ratings}}, function(err) {
+                  if (err) {
+                    console.log(err);
+                    res.redirect("/campgrounds");
+                  } else {
+                    // remove campground
+                    foundCampground.remove(function(err) {
+                        if (err) {
+                            req.flash("error", err.message);
+                            res.redirect("/campgrounds");
+                        } else {
+                            req.flash("success", "Campground successfully deleted.");
+                            res.redirect("/campgrounds");
+                        }
+                    });
+                  }
+              });
             }
         });
       }
