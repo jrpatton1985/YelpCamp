@@ -204,6 +204,20 @@ router.get("/", function(req, res, next) {
 router.get("/page/:page", function(req, res, next) {
     paginate(req, res, next);
 });
+// -- Get Top Rated Panel Route
+router.get("/toprated", function(req, res, next) {
+    // query for camps sorted by rating
+    Campground.find({})
+              .sort({"rating":-1})
+              .limit(10)
+              .exec(function(err, topCamps) {
+                  if (err) console.log(err);
+                  else {
+                    //console.log(topCamps);
+                    res.render('campgrounds/toprated', {campgrounds: topCamps})
+                  }
+    });
+});
 
 // =========== Campground Routes ==============
 // -- New Route

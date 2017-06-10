@@ -1,3 +1,22 @@
+$(document).ready(function(e) {
+  var url = window.location.origin + "/campgrounds/toprated";
+  // alert(url);
+  $.ajax({
+    type: 'GET',
+    url: url,
+    success: function(res) {
+      $('#rated-panel').html(res);
+    }
+  });
+});
+
+sr.reveal('#rated-panel', {
+  duration: 1000,
+  origin: 'right',
+  distance: '50px',
+  viewFactor: 0.1
+});
+
 sr.reveal('#campground-grid', {
   duration: 1000,
   origin: 'bottom',

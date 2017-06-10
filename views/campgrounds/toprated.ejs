@@ -1,0 +1,19 @@
+<div class="top-text"><span style="font-size: .6em !important;">YelpCamp</span> <br><i class="glyphicon glyphicon-tent"></i> <span style="letter-spacing: 5px; text-transform: uppercase;">Top Ten</span></div>
+<ul class="rated">
+  <% var i = 0; %>
+  <% campgrounds.forEach(function(campground) { %>
+    <%i++; %>
+    <li>
+      <div class="rated-num">
+        <%=i.toString(); %>
+      </div>
+      <div class="side-name">
+        <i class="fa fa-star" style="color: #F5BD23;"></i><strong> <%=campground.rating.toFixed(1) %></strong></span>
+        <a href="/campgrounds/<%=campground._id %>" style="color: #333;"><%=campground.name %></a>
+      </div>
+      <div class="side-location">
+        <%=campground.location %>
+      </div>
+    </li>
+  <% }); %>
+</ul>
