@@ -15,4 +15,39 @@
       $('.close').on('click', function(e) {
           $('#flash').hide();
       });
+
+      var tickerItems = [
+          "Discover amazing campgrounds from all over the globe",
+          "Start planning your trip today",
+          "Getcha-Camp-On!",
+          "View an exquisite selection of hand-picked campgrounds",
+          "Sign up and get started!"
+          ];
+
+      var tickerIndex = 0;
+      var tickerDuration = 4;
+      var ticker;
+
+      var setTicker = function() {
+          ticker.text(tickerItems[tickerIndex++]);
+          if (tickerIndex >= tickerItems.length) {
+              tickerIndex = 0;
+          }
+      };
+
+      var rotateTicker = function() {
+          ticker.fadeOut('slow', function() {
+              setTicker();
+              ticker.fadeIn('slow');
+          });
+      };
+
+      $(document).ready(function() {
+          ticker = $('ul#ticker li');
+          setTicker();
+          if (tickerItems.length > 1) {
+              window.setInterval(rotateTicker, tickerDuration * 1000);
+          }
+      });
+
     </script>
