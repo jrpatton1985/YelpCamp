@@ -5,3 +5,14 @@
     <!-- Plugin Javascript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script type="text/javascript" src="/js/randombg.js"></script>
+    <script type="text/javascript">
+      sr.reveal('#flash', {
+          duration: 1000,
+          origin: 'top',
+          distance: '25px'
+      });
+
+      $('.close').on('click', function(e) {
+          $('#flash').hide();
+      });
+    </script>

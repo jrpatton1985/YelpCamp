@@ -178,7 +178,9 @@ router.get("/", function(req, res, next) {
     if (req.query.search) {
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
         // get campgrounds by search query
-        Campground.find({name: regex}, function(err, allCampgrounds) {
+        Campground.find({name: regex})
+                  .populate('author.id', ['image'])
+                  .exec(function(err, allCampgrounds) {
             if (err) {
               console.log(err);
               req.flash('error', err.message);
