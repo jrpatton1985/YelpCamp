@@ -35,11 +35,8 @@ app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 // database
 //seedDB();   // seed the database
 mongoose.promise = global.Promise;
-// connect to database either locally (mongodb://localhost/yelp_camp)
-// or through Mongo Lab online (mongodb://pattonjim:ppbq635H@ds153710.mlab.com:53710/yelp_camp)
+// connect to database either locally or through Mongo Lab online 
 mongoose.connect(process.env.DATABASEURL);
-// mongoose.connect("mongodb://localhost/yelp_camp");
-// mongoose.connect("mongodb://pattonjim:ppbq635H@ds153710.mlab.com:53710/yelp_camp");
 mongoose.connection.on('connected', function() {
     console.log('Default database connection open.');
 });
