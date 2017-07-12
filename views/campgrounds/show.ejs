@@ -23,6 +23,12 @@
         <div class="thumbnail">
           <img class="img-responsive img-rounded" id="thumbnail-show" src="<%=campground.image %>" alt="<%=campground.name %>">
           <div class="caption-full box-shadow">
+
+            <ul class="nav nav-tabs">
+              <li role="presentation" class="active"><a href="#description" data-toggle="tab">Description</a></li>
+              <li role="presentation"><a href="#amenities" data-toggle="tab">Amenities</a></li>
+            </ul>
+
             <h4 class="pull-right">
               <% if (campground.price) { %>
                 $<%=campground.price %>/night
@@ -32,55 +38,62 @@
             </h4>
             <h4><%=campground.name %> <span class="rating-star"><strong> <%= campground.rating.toFixed(1) %></strong></span></h4>
 
-            <p><%=campground.description %></p>
+            <div class="tab-content">
+              <div class="tab-pane fade in active" id="description">
+                <p><%=campground.description %></p>
 
-            <% if (currentUser) { %>
-              <% var found = false; %>
-              <% var rated = 0; %>
-              <% for (var i = 0; i < campground.ratings.length; i ++) { %>
-                <% if (campground.ratings[i].author.id.equals(currentUser._id)) { %>
-                    <% found = true; %>
-                    <% rated = campground.ratings[i].rating; %>
-                    <% break; %>
+                <% if (currentUser) { %>
+                  <% var found = false; %>
+                  <% var rated = 0; %>
+                  <% for (var i = 0; i < campground.ratings.length; i ++) { %>
+                    <% if (campground.ratings[i].author.id.equals(currentUser._id)) { %>
+                        <% found = true; %>
+                        <% rated = campground.ratings[i].rating; %>
+                        <% break; %>
+                    <% } %>
+                  <% } %>
+
+                  <% if (found) { %>
+                    <label for="rating">Your rating:</label>
+                    <div id="rating" class="starability-result" data-rating="<%=rated %>" aria-describedby="rated-element">
+                      <%=rated %> stars
+                    </div>
+                  <% } else { %>
+                    <form action="/campgrounds/<%=campground._id %>/ratings" method="POST">
+                      <div class="form-group">
+                        <label for="rating">Leave a rating:</label>
+                        <fieldset class="starability-basic form-group" id="rating">
+                          <input type="radio" id="first-rate5" name="rating[rating]" value="5">
+                          <label for="first-rate5" title="Awesome">5 Stars</label>
+                          <input type="radio" id="first-rate4" name="rating[rating]" value="4">
+                          <label for="first-rate4" title="Very Good">4 Stars</label>
+                          <input type="radio" id="first-rate3" name="rating[rating]" value="3">
+                          <label for="first-rate3" title="Average">3 Stars</label>
+                          <input type="radio" id="first-rate2" name="rating[rating]" value="2">
+                          <label for="first-rate2" title="Mediocre">2 Stars</label>
+                          <input type="radio" id="first-rate1" name="rating[rating]" value="1">
+                          <label for="first-rate1" title="Bad">1 Star</label>
+                        </fieldset>
+                        <input type="submit" class="btn btn-sm btn-success" value="Rate">
+                      </div>
+                    </form>
+                  <% } %>
                 <% } %>
-              <% } %>
 
-              <% if (found) { %>
-                <label for="rating">Your rating:</label>
-                <div id="rating" class="starability-result" data-rating="<%=rated %>" aria-describedby="rated-element">
-                  <%=rated %> stars
-                </div>
-              <% } else { %>
-                <form action="/campgrounds/<%=campground._id %>/ratings" method="POST">
-                  <div class="form-group">
-                    <label for="rating">Leave a rating:</label>
-                    <fieldset class="starability-basic form-group" id="rating">
-                      <input type="radio" id="first-rate5" name="rating[rating]" value="5">
-                      <label for="first-rate5" title="Awesome">5 Stars</label>
-                      <input type="radio" id="first-rate4" name="rating[rating]" value="4">
-                      <label for="first-rate4" title="Very Good">4 Stars</label>
-                      <input type="radio" id="first-rate3" name="rating[rating]" value="3">
-                      <label for="first-rate3" title="Average">3 Stars</label>
-                      <input type="radio" id="first-rate2" name="rating[rating]" value="2">
-                      <label for="first-rate2" title="Mediocre">2 Stars</label>
-                      <input type="radio" id="first-rate1" name="rating[rating]" value="1">
-                      <label for="first-rate1" title="Bad">1 Star</label>
-                    </fieldset>
-                    <input type="submit" class="btn btn-sm btn-success" value="Rate">
-                  </div>
-                </form>
-              <% } %>
-            <% } %>
+                <p><em>Campground by:
+                  <% if (campground.author.id.image !== undefined) { %>
+                      <img class="img-circle user-img" src="<%=campground.author.id.image %>" alt="">
+                  <% } else { %>
+                      <img class="img-circle user-img" src="https://s3.us-east-2.amazonaws.com/pattonjim-yelpcamp/uploads/no-profile.png" alt="">
+                  <% }%>
 
-            <p><em>Campground by:
-              <% if (campground.author.id.image !== undefined) { %>
-                  <img class="img-circle user-img" src="<%=campground.author.id.image %>" alt="">
-              <% } else { %>
-                  <img class="img-circle user-img" src="https://s3.us-east-2.amazonaws.com/pattonjim-yelpcamp/uploads/no-profile.png" alt="">
-              <% }%>
-
-              <%=campground.author.username %>, <%= moment(campground.createdAt).fromNow() %>
-            </em></p>
+                  <%=campground.author.username %>, <%= moment(campground.createdAt).fromNow() %>
+                </em></p>
+              </div>
+              <div class="tab-pane fade" id="amenities">
+                <p>Amenities</p>
+              </div>
+            </div>
 
             <% if(currentUser && campground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
               <hr>

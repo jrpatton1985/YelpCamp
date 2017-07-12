@@ -7,6 +7,7 @@ $(document).ready(function() {
       type: 'GET',
       url: url,
       success: function(res) {
+        $('#imageError').html('');
         $('#uploadModal').html(res);
         $('#uploadModal').modal('show');
       }
@@ -47,11 +48,35 @@ $(document).ready(function() {
           processData: false,
           contentType: false,
           success: function(data) {
-              console.log('upload successful!\n' + data);
+              //console.log('upload successful!\n' + data);
               // set the new avatar image source
               $('#avatar').attr('src', data);
               // close the modal
               //$('#uploadModal').modal('hide');
+          },
+
+          error: function(xhr, textStatus, error) {
+              var msg = '';
+              // console.log(xhr);
+              // check the responseText
+              switch (xhr.responseText) {
+                case 'FORMAT_NOT_SUPPORTED':
+                  msg = 'Image format not supported.'
+                  break;
+                case 'DIMENSIONS_TOO_LARGE':
+                  msg = 'Image dimensions too large.'
+                  break;
+                case 'FILE_TOO_LARGE':
+                  msg = 'Image exceeds file size limit.'
+                  break;
+                case 'UNCAUGHT_ERROR':
+                  msg = 'Uncaught error occurred.'
+                  break;
+                default:
+                  msg = 'Unknown error occurred.'
+              }
+              // display error
+              $('#imageError').html(msg);
           },
 
           xhr: function() {

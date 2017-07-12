@@ -31,6 +31,10 @@ li.dropdown:hover > .dropdown-menu {
   cursor: pointer;
   margin-right: 15px;
   z-index: 9999;
+
+  -webkit-box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.5);
+  -moz-box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.5);
+  box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.5);
 }
 .follow-scroll i {
   color: #fff;
@@ -184,6 +188,11 @@ ul.dropdown-menu .divider {
 
 .panel-body span {
   font-size: 5em;
+}
+
+#imageError {
+  font-size: 100% !important;
+  padding: 15px;
 }
 
 .form-center {
@@ -510,6 +519,10 @@ ul.rated li:last-child {
   -webkit-border-radius: 0px 0px 5px 5px;
   border-radius: 0px 0px 5px 5px; /* future proofing */
   -khtml-border-radius: 0px 0px 5px 5px; /* for old Konqueror browsers */
+}
+
+.caption-full h4 {
+  padding-top: 5px;
 }
 
 img#thumbnail-show {

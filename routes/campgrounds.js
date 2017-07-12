@@ -147,12 +147,11 @@ var storage = multer.diskStorage({
     }
 });
 // ===============  Upload  ================= */
-
-var maxSize = 10 * 1024 * 1024;
+var maxSize = 1 * 1024 * 1024;   // 10mb file size limit
 var upload = multer({
   storage : storage,
   fileFilter: function(req, file, callback) {
-			var ext = path.extname(file.originalname)
+			var ext = path.extname(file.originalname).toLowerCase();
 			if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
 				return callback(new Error('Only images are allowed'), null);
 			}
@@ -273,6 +272,15 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
     upload(req, res, function(err) {
         if (err) {
           console.log(err);
+          if (err.message === 'Only images are allowed') {
+              req.flash("error", "Image format not supported.");
+              return res.redirect('back');
+          }
+          if (err.message === 'File too large') {
+              req.flash("error", "Image exceeds file size limit.");
+              return res.redirect('back');
+          }
+
           return res.send("An error occurred when uploading file.");
         }
 
@@ -349,6 +357,15 @@ router.put("/:id", middleware.checkCampgroundOwnership, function(req, res) {
     upload(req, res, function(err) {
         //console.log(req.file);
         if (err) {
+          if (err.message === 'Only images are allowed') {
+              req.flash("error", "Image format not supported.");
+              return res.redirect('back');
+          }
+          if (err.message === 'File too large') {
+              req.flash("error", "Image exceeds file size limit.");
+              return res.redirect('back');
+          }
+
           return res.send("An error occurred when uploading file.");
         }
 
