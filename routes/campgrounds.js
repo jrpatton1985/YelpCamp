@@ -147,7 +147,7 @@ var storage = multer.diskStorage({
     }
 });
 // ===============  Upload  ================= */
-var maxSize = 1 * 1024 * 1024;   // 10mb file size limit
+var maxSize = 10 * 1024 * 1024;   // 10mb file size limit
 var upload = multer({
   storage : storage,
   fileFilter: function(req, file, callback) {
